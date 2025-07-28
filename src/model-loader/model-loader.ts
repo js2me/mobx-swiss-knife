@@ -6,7 +6,7 @@ import { ModelLoadedState, ModelLoaderOptions } from './model-loader.types.js';
 
 const storageAccessSymbol = Symbol('[lazy-models]');
 
-export class ModelLoader<TContext extends AnyObject> {
+export class ModelLoader<TContext extends AnyObject = AnyObject> {
   private abortController: LinkedAbortController;
 
   private context: TContext;
@@ -202,6 +202,10 @@ export class ModelLoader<TContext extends AnyObject> {
    */
   isLoading<TProperty extends keyof TContext>(key: TProperty): boolean {
     return this.storage.get(key)?.data == null;
+  }
+
+  destroy() {
+    this.abortController.abort();
   }
 }
 

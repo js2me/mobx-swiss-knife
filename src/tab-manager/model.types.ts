@@ -7,7 +7,10 @@ export interface TabManagerConfig<
 > {
   tabs: MaybeFn<Maybe<ReadonlyArray<TItem> | Array<TItem>>>;
   abortSignal?: AbortSignal;
-  fallbackTab: NoInfer<TItem>['id'];
+  /**
+   * Otherwise first element of tabs
+   */
+  fallbackTab?: NoInfer<TItem>['id'];
   getActiveTab?: () => NoInfer<TItem>['id'] | null | undefined;
   onChangeActiveTab?: (
     nextActiveTab: NoInfer<TItem>['id'],
