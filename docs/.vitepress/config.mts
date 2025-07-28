@@ -67,7 +67,7 @@ export default defineConfig({
           { text: 'Socket', link: '/tools/socket' },
           { text: 'Stepper', link: '/tools/stepper' },
           { text: 'Storage', link: '/tools/storage' },
-          { text: 'TabManager', link: '/tools/tab-mnager' },
+          { text: 'TabManager', link: '/tools/tab-manager' },
           {
             text: 'themes',
             items: [
@@ -76,7 +76,7 @@ export default defineConfig({
           },
           { text: 'Ticker', link: '/tools/ticker' },
           { text: 'Time', link: '/tools/time' },
-          { text: 'timers', link: '/tools/timers' },
+          { text: 'Timers', link: '/tools/timers' },
         ]
       }
     ],

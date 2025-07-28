@@ -8,7 +8,7 @@ import {
   type SyncWithStorageParams,
 } from './model.types.js';
 
-export class StorageModel {
+export class Storage {
   protected abortController: AbortController;
   protected abortSignal: AbortSignal;
 
@@ -21,7 +21,7 @@ export class StorageModel {
 
   protected getStorage(
     params: Pick<GetFromStorageParams<any> | SetToStorageParams<any>, 'type'>,
-  ): Storage {
+  ): globalThis.Storage {
     const type = params.type ?? this.config?.type;
 
     if (type === 'session') {
@@ -135,5 +135,15 @@ export class StorageModel {
   }
 }
 
-export const createStorageModel = (config?: StorageModelConfig) =>
-  new StorageModel(config);
+/**
+ * @deprecated use `Storage` instead. Will be removed in next major release
+ */
+export class StorageModel extends Storage {}
+
+export const createStorage = (config?: StorageModelConfig) =>
+  new Storage(config);
+
+/**
+ * @deprecated use `createStorage` instead. Will be removed in next major release
+ */
+export const createStorageModel = createStorage;

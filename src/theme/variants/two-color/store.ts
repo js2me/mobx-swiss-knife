@@ -1,14 +1,14 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
-import { StorageModel } from '../../../storage/index.js';
+import { Storage } from '../../../storage/index.js';
 
 import { ColorScheme, Theme, TwoColorThemeStoreConfig } from './store.types.js';
 
 export class TwoColorThemeStore {
   protected abortController: AbortController;
   protected abortSignal: AbortSignal;
-  protected storageModel?: StorageModel;
+  protected storageModel?: Storage;
 
   theme!: Theme;
   mediaColorScheme: ColorScheme;
@@ -31,7 +31,7 @@ export class TwoColorThemeStore {
     if (config?.localStorageKey === false) {
       this.theme = this.getFallbackTheme();
     } else {
-      this.storageModel = new StorageModel({
+      this.storageModel = new Storage({
         abortSignal: this.abortSignal,
       });
 
