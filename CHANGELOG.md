@@ -1,5 +1,17 @@
 # mobx-swiss-knife
 
+## 1.2.0
+
+### Minor Changes
+
+- [`a043199`](https://github.com/js2me/mobx-swiss-knife/commit/a043199b00dc6972493ecb7b66b48301e9311848) Thanks [@js2me](https://github.com/js2me)! - added destroy method for ModelLoader
+
+- [`a043199`](https://github.com/js2me/mobx-swiss-knife/commit/a043199b00dc6972493ecb7b66b48301e9311848) Thanks [@js2me](https://github.com/js2me)! - added more documentation about tools
+
+- [`a043199`](https://github.com/js2me/mobx-swiss-knife/commit/a043199b00dc6972493ecb7b66b48301e9311848) Thanks [@js2me](https://github.com/js2me)! - improve FakerLoader (added instance, isLoading, error properties)
+
+- [`a043199`](https://github.com/js2me/mobx-swiss-knife/commit/a043199b00dc6972493ecb7b66b48301e9311848) Thanks [@js2me](https://github.com/js2me)! - improve TabManager -> fallbackTab make optional
+
 ## 1.1.1
 
 ### Patch Changes
