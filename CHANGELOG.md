@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.2.1
+
+### Patch Changes
+
+- [`b04bcdd`](https://github.com/js2me/mobx-swiss-knife/commit/b04bcdd78586d60216630331a13208d507662029) Thanks [@js2me](https://github.com/js2me)! - fix `activeTab` for TabManager type
+
 ## 1.2.0
 
 ### Minor Changes
