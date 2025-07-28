@@ -52,7 +52,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
     return this.tabs[index];
   };
 
-  get activeTab() {
+  get activeTab(): T['id'] {
     const tabId = this.config.getActiveTab
       ? this.config.getActiveTab()
       : this.localActiveTab;
