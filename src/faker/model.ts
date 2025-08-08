@@ -8,6 +8,9 @@ import { FakerLoaderConfig } from './model.types.js';
 
 declare const process: { env: { NODE_ENV?: string } };
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader)
+ */
 export class FakerLoader {
   private modelLoader: ModelLoader<AnyObject>;
   private locale: string;
@@ -61,6 +64,9 @@ export class FakerLoader {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader)
+ */
 export const createFakerLoader = (config?: FakerLoaderConfig) =>
   new FakerLoader(config);
 

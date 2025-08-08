@@ -1,7 +1,17 @@
-import { action, makeObservable, observable } from 'mobx';
+import {
+  action,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+} from 'mobx';
+import { callFunction } from 'yummies/common';
 
 import { StepperConfig } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/stepper)
+ */
 export class Stepper<StepData> {
   activeStepIndex = 0;
 
@@ -11,8 +21,8 @@ export class Stepper<StepData> {
     return this.steps[this.activeStepIndex];
   }
 
-  constructor({ steps = [] }: StepperConfig<StepData>) {
-    this.steps = steps;
+  constructor({ steps = [], abortSignal }: StepperConfig<StepData>) {
+    this.steps = callFunction(steps);
 
     observable(this, 'activeStepIndex');
     observable(this, 'steps');
@@ -22,6 +32,12 @@ export class Stepper<StepData> {
     action.bound(this, 'prevStep');
 
     makeObservable(this);
+
+    if (typeof steps === 'function') {
+      reaction(steps, (steps) => runInAction(() => this.setSteps(steps)), {
+        signal: abortSignal,
+      });
+    }
   }
 
   setSteps(steps: StepData[]) {
@@ -60,5 +76,8 @@ export class Stepper<StepData> {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/stepper)
+ */
 export const createStepper = <StepData>(config: StepperConfig<StepData>) =>
   new Stepper(config);

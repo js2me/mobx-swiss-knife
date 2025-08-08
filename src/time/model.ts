@@ -12,6 +12,9 @@ import { callFunction } from 'yummies/common';
 
 import { TimeConfig } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/time)
+ */
 export class Time<TValue = Date> {
   protected abortController: AbortController;
   protected atom: IAtom;
@@ -85,5 +88,8 @@ export class Time<TValue = Date> {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/time)
+ */
 export const createTime = <TValue = Date>(config?: TimeConfig<TValue>) =>
   new Time(config);

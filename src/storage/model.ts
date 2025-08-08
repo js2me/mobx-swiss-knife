@@ -8,6 +8,9 @@ import {
   type SyncWithStorageParams,
 } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/storage)
+ */
 export class Storage {
   protected abortController: AbortController;
   protected abortSignal: AbortSignal;
@@ -140,6 +143,9 @@ export class Storage {
  */
 export class StorageModel extends Storage {}
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/storage)
+ */
 export const createStorage = (config?: StorageModelConfig) =>
   new Storage(config);
 

@@ -6,6 +6,9 @@ import { ModelLoadedState, ModelLoaderOptions } from './model-loader.types.js';
 
 const storageAccessSymbol = Symbol('[lazy-models]');
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/model-loader)
+ */
 export class ModelLoader<TContext extends AnyObject = AnyObject> {
   private abortController: LinkedAbortController;
 
@@ -209,6 +212,9 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/model-loader)
+ */
 export const createModelLoader = <TContext extends AnyObject>(
   options: ModelLoaderOptions<TContext>,
 ) => new ModelLoader(options);

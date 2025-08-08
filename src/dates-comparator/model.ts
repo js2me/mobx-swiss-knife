@@ -12,6 +12,9 @@ import {
 
 /**
  * Entity for comparing two dates, allows you to dynamically get the difference between two dynamic dates
+ *
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator)
+ *
  */
 export class DatesComparator implements DatesComparison {
   dates: DatesToCompare | null = null;
@@ -131,5 +134,11 @@ export class DatesComparator implements DatesComparison {
   }
 }
 
+/**
+ * Entity for comparing two dates, allows you to dynamically get the difference between two dynamic dates
+ *
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator)
+ *
+ */
 export const createDatesComparator = (config?: DatesComparatorConfig) =>
   new DatesComparator(config);

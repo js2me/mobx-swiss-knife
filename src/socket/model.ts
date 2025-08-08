@@ -3,6 +3,9 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { SocketConfig } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/socket)
+ */
 export class Socket<
   Payload = void,
   InputMessageType = any,
@@ -180,6 +183,9 @@ export class Socket<
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/socket)
+ */
 export const createSocket = <
   Payload = void,
   InputMessageType = any,

@@ -10,6 +10,9 @@ import {
   TimersConfig,
 } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/timers)
+ */
 export class Timers {
   private configsMap: Map<string, TimerConfig>;
 
@@ -154,4 +157,7 @@ export class Timers {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/timers)
+ */
 export const createTimers = (config?: TimersConfig) => new Timers(config);

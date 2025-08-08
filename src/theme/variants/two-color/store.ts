@@ -5,6 +5,9 @@ import { Storage } from '../../../storage/index.js';
 
 import { ColorScheme, Theme, TwoColorThemeStoreConfig } from './store.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store)
+ */
 export class TwoColorThemeStore {
   protected abortController: AbortController;
   protected abortSignal: AbortSignal;
@@ -113,5 +116,8 @@ export class TwoColorThemeStore {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store)
+ */
 export const createTwoColorThemeStore = (config?: TwoColorThemeStoreConfig) =>
   new TwoColorThemeStore(config);

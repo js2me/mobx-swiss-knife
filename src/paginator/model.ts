@@ -15,6 +15,9 @@ import {
   PaginationOffsetData,
 } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/paginator)
+ */
 export class Paginator {
   private abortController: AbortController;
   private page: number;
@@ -153,5 +156,8 @@ export class Paginator {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/paginator)
+ */
 export const createPaginator = (config: PaginatorConfig) =>
   new Paginator(config);

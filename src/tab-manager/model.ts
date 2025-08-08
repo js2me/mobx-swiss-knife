@@ -11,6 +11,9 @@ import { callFunction } from 'yummies/common';
 
 import { TabManagerConfig, TabManagerItem } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager)
+ */
 export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
   private abortController: AbortController;
 
@@ -91,6 +94,9 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager)
+ */
 export const createTabManager = <T extends TabManagerItem>(
   config: TabManagerConfig<T>,
 ) => new TabManager(config);

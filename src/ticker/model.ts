@@ -3,6 +3,9 @@ import { action, makeObservable, observable, reaction } from 'mobx';
 
 import { TickerConfig } from './model.types.js';
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/ticker)
+ */
 export class Ticker {
   private abortController: AbortController;
   private intervalId: ReturnType<typeof setInterval> | null;
@@ -63,4 +66,7 @@ export class Ticker {
   }
 }
 
+/**
+ * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/ticker)
+ */
 export const createTicker = (config: TickerConfig) => new Ticker(config);
