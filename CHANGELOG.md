@@ -1,5 +1,15 @@
 # mobx-swiss-knife
 
+## 1.3.0
+
+### Minor Changes
+
+- [`826d819`](https://github.com/js2me/mobx-swiss-knife/commit/826d819a06f5143e0b62a60cbcaf241b824e423e) Thanks [@js2me](https://github.com/js2me)! - make steps param accepts as fn in Stepper
+
+### Patch Changes
+
+- [`826d819`](https://github.com/js2me/mobx-swiss-knife/commit/826d819a06f5143e0b62a60cbcaf241b824e423e) Thanks [@js2me](https://github.com/js2me)! - add docs link to tools
+
 ## 1.2.1
 
 ### Patch Changes
