@@ -5,7 +5,7 @@ export type TabManagerItem = { id: string | number | boolean };
 export interface TabManagerConfig<
   TItem extends TabManagerItem | Readonly<TabManagerItem>,
 > {
-  tabs: MaybeFn<Maybe<ReadonlyArray<TItem> | Array<TItem>>>;
+  tabs: MaybeFn<Maybe<ReadonlyArray<TItem> | Array<TItem>> | void>;
   abortSignal?: AbortSignal;
   /**
    * Otherwise first element of tabs
