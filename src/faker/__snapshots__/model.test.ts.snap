@@ -1,0 +1,6 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FakerLoader > instance getter > should throw an error in development mode when instance is not found 1`] = `
+[Error: Faker instance with locale "en" is not found.
+Use method load() to load instance]
+`;

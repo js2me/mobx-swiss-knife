@@ -159,8 +159,6 @@ describe('stepper', () => {
     expect(stepper.steps).toEqual(['1', '3']);
   });
 
-  // Additional tests for edge cases and boundary conditions
-
   it('should handle empty steps array', () => {
     const stepper = createStepper<string>({
       steps: [],

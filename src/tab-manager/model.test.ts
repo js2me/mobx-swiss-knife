@@ -74,7 +74,6 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Should have aborted controller
       expect(tabManager['abortController']).toBeDefined();
     });
   });
@@ -101,7 +100,6 @@ describe('TabManager', () => {
       expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
       expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
 
-      // Update tabs
       tabManager.setTabs(newTabs);
 
       expect(tabManager['tabs']).toEqual(newTabs);
@@ -123,7 +121,6 @@ describe('TabManager', () => {
 
       expect(tabManager['tabs']).toEqual(initialTabs);
 
-      // Update with empty tabs
       tabManager.setTabs([]);
 
       expect(tabManager['tabs']).toEqual([]);
@@ -422,7 +419,6 @@ describe('TabManager', () => {
 
       expect(tabManager.activeTab).toBe('tab1');
 
-      // Try to set the same tab as active
       tabManager.setActiveTab('tab1');
 
       expect(tabManager.activeTab).toBe('tab1');
@@ -466,7 +462,6 @@ describe('TabManager', () => {
 
       tabManager.setActiveTab('tab2');
 
-      // Should not be called because getActiveTab is not provided
       expect(onChangeActiveTab).not.toHaveBeenCalled();
     });
 
@@ -569,12 +564,8 @@ describe('TabManager', () => {
       expect(tabManager['tabs']).toEqual(initialTabs);
       expect(tabManager['tabIndexesMap'].size).toBe(1);
 
-      // Mock the getter to return updated tabs
       tabsGetter.mockReturnValue(updatedTabs);
 
-      // Force a reaction by triggering the getter
-      // Note: In real scenario, this would happen automatically due to mobx reaction
-      // For testing purposes, we'll manually trigger the update
       tabManager.setTabs(updatedTabs);
 
       expect(tabManager['tabs']).toEqual(updatedTabs);
@@ -615,7 +606,6 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Should fall back to first tab
       expect(tabManager.activeTab).toBe('tab1');
     });
 
@@ -637,7 +627,6 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Should not crash, but activeTab will be undefined or throw
       expect(() => tabManager.activeTab).toThrow();
     });
   });
@@ -675,13 +664,11 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Test retrieving each tab
       expect(tabManager.getTabData('string-id')).toEqual(tabs[0]);
       expect(tabManager.getTabData(123)).toEqual(tabs[1]);
       expect(tabManager.getTabData(true)).toEqual(tabs[2]);
       expect(tabManager.getTabData(false)).toEqual(tabs[3]);
 
-      // Test active tab behavior
       expect(tabManager.activeTab).toBe('string-id');
     });
 
@@ -701,16 +688,13 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Check initial state
       expect(tabManager.activeTab).toBe('tab1');
       expect(tabManager.activeTabData.title).toBe('Tab 1');
 
-      // Update tabs
       tabManager.setTabs(updatedTabs);
 
-      // Check updated state
-      expect(tabManager.activeTab).toBe('tab1'); // Should still be the same tab
-      expect(tabManager.activeTabData.title).toBe('Updated Tab 1'); // Updated data
+      expect(tabManager.activeTab).toBe('tab1');
+      expect(tabManager.activeTabData.title).toBe('Updated Tab 1');
     });
 
     it('should handle multiple setActiveTab calls efficiently', () => {
@@ -726,11 +710,10 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Multiple calls to setActiveTab
       tabManager.setActiveTab('tab2');
       tabManager.setActiveTab('tab3');
       tabManager.setActiveTab('tab1');
-      tabManager.setActiveTab('tab1'); // Same tab again
+      tabManager.setActiveTab('tab1');
 
       expect(tabManager.activeTab).toBe('tab1');
     });
@@ -753,18 +736,15 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // Verify initial state
       expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
       expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
 
-      // Update tabs
       tabManager.setTabs(updatedTabs);
 
-      // Verify updated state
       expect(tabManager['tabIndexesMap'].get('tab3')).toBe(0);
       expect(tabManager['tabIndexesMap'].get('tab1')).toBe(1);
       expect(tabManager['tabIndexesMap'].get('tab4')).toBe(2);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBeUndefined(); // Should be removed
+      expect(tabManager['tabIndexesMap'].get('tab2')).toBeUndefined();
     });
   });
 });

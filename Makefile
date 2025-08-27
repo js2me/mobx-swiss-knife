@@ -17,3 +17,6 @@ doc-build:
 	rm -rf .vitepress/cache && \
 	pnpm i && \
 	pnpm build
+check:
+	make clean
+	pnpm check

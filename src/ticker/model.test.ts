@@ -264,7 +264,7 @@ describe('Ticker', () => {
       ticker.stop();
       expect(ticker.isRunning).toBe(false);
 
-      expect(ticker.ticks).toBe(0); // Should not accumulate ticks across cycles
+      expect(ticker.ticks).toBe(0);
     });
 
     it('should maintain state consistency', () => {
@@ -580,8 +580,8 @@ describe('Ticker', () => {
       const ticker = new Ticker(config);
 
       ticker.destroy();
-      ticker.destroy(); // Second destroy should not throw
-      ticker.destroy(); // Third destroy should not throw
+      ticker.destroy();
+      ticker.destroy();
 
       expect(ticker.ticks).toBe(0);
       expect(ticker.isRunning).toBe(false);

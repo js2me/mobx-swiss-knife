@@ -14,6 +14,7 @@ export interface ModelLoaderOptions<TContext extends AnyObject> {
    */
   context: TContext;
   abortSignal?: AbortSignal;
+  throwOnError?: boolean;
   onLoadFailed?: (error: any, property: any) => void;
   onLoadSucceed?: (data: any, property: any) => void;
 }

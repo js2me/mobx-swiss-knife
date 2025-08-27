@@ -4,7 +4,7 @@ import { AnyObject, Maybe } from 'yummies/utils/types';
 
 import { ModelLoadedState, ModelLoaderOptions } from './model-loader.types.js';
 
-const storageAccessSymbol = Symbol('[lazy-models]');
+const storageAccessSymbol = Symbol.for('[lazy-models]');
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/model-loader)
@@ -120,9 +120,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
       data,
     });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    context[property] = data;
+    this.context[property as keyof TContext] = data;
 
     this.options.onLoadSucceed?.(data, property);
 
@@ -145,6 +143,10 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     });
 
     this.options.onLoadFailed?.(error, property);
+
+    if (this.options.throwOnError) {
+      throw error;
+    }
   }
 
   get hasErroredModels() {

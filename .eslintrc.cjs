@@ -8,5 +8,6 @@ module.exports = {
       'error',
       { ignore: Object.keys(packageJson.peerDependencies) },
     ],
+    'unicorn/no-useless-undefined': 'off'
   },
 };

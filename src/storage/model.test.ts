@@ -21,7 +21,6 @@ describe('Storage', () => {
   let storage: Storage;
 
   beforeEach(() => {
-    // Mock globalThis.localStorage and sessionStorage
     Object.defineProperty(globalThis, 'localStorage', {
       writable: true,
       value: mockLocalStorage,
@@ -32,7 +31,6 @@ describe('Storage', () => {
       value: mockSessionStorage,
     });
 
-    // Reset mocks
     vi.clearAllMocks();
 
     storage = new Storage();
@@ -275,11 +273,8 @@ describe('Storage', () => {
         key: 'test-key',
       });
 
-      // Change the property
       context.testProp = 'updated-value';
 
-      // The storage should be updated (this would happen in autorun)
-      // We can't easily test the autorun behavior, but we can verify the disposer works
       expect(context.testProp).toBe('updated-value');
     });
   });
