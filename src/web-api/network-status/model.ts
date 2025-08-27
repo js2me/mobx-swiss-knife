@@ -1,18 +1,14 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 import { createAtom, IAtom, reaction } from 'mobx';
 
 import { NetworkStatusParams } from './model.types.js';
 
 export class NetworkStatus {
-  private atom: IAtom;
   private disposeFn?: VoidFunction;
 
-  constructor(params?: NetworkStatusParams) {
-    this.atom = createAtom(
-      process.env.NODE_ENV === 'production' ? '' : 'networkStatusAtom',
-      () => globalThis.addEventListener('online', this.atom.reportChanged),
-      () => globalThis.removeEventListener('online', this.atom.reportChanged),
-    );
+  private static atom?: IAtom;
 
+  constructor(params?: NetworkStatusParams) {
     if (params?.whenOnline || params?.whenOffline) {
       this.disposeFn = reaction(
         () => this.isOnline,
@@ -29,20 +25,38 @@ export class NetworkStatus {
   }
 
   get isOnline() {
-    this.atom.reportObserved();
-    return navigator.onLine;
+    return NetworkStatus.isOnline;
   }
 
   get isOffline() {
+    return NetworkStatus.isOffline;
+  }
+
+  static get isOnline() {
+    if (NetworkStatus.atom === undefined) {
+      NetworkStatus.atom = createAtom(
+        process.env.NODE_ENV === 'production' ? '' : 'networkStatusAtom',
+        () =>
+          globalThis.addEventListener(
+            'online',
+            NetworkStatus.atom!.reportChanged,
+          ),
+        () =>
+          globalThis.removeEventListener(
+            'online',
+            NetworkStatus.atom!.reportChanged,
+          ),
+      );
+    }
+    NetworkStatus.atom.reportObserved();
+    return navigator.onLine;
+  }
+
+  static get isOffline() {
     return !this.isOnline;
   }
 
-  protected handleOnlineChange = () => {
-    this.atom.reportChanged();
-  };
-
   destroy() {
-    this.atom.observers_.clear();
     this.disposeFn?.();
   }
 }
