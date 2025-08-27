@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.4.0
+
+### Minor Changes
+
+- [`c9a387e`](https://github.com/js2me/mobx-swiss-knife/commit/c9a387e51d261e28baa09a56a4c22dd848c2dcf5) Thanks [@js2me](https://github.com/js2me)! - add `addStep` and `removeStep` methods for `Stepper`
+
 ## 1.3.0
 
 ### Minor Changes
