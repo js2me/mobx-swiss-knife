@@ -30,6 +30,8 @@ export class Stepper<StepData> {
     action.bound(this, 'goToStep');
     action.bound(this, 'nextStep');
     action.bound(this, 'prevStep');
+    action.bound(this, 'addStep');
+    action.bound(this, 'removeStep');
 
     makeObservable(this);
 
@@ -73,6 +75,16 @@ export class Stepper<StepData> {
 
   get hasPrevStep() {
     return this.activeStepIndex !== 0;
+  }
+
+  addStep(step: StepData) {
+    if (!this.steps.includes(step)) {
+      this.steps.push(step);
+    }
+  }
+
+  removeStep(step: StepData) {
+    this.steps = this.steps.filter((it) => it !== step);
   }
 }
 
