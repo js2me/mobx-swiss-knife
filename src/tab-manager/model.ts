@@ -33,6 +33,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
     action(this, 'setTabs');
     computed.struct(this, 'activeTab');
     computed.struct(this, 'activeTabData');
+    computed.struct(this, 'tabsCount');
     observable.ref(this, 'tabs');
     observable.ref(this, 'tabIndexesMap');
 
@@ -69,6 +70,10 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
     }
 
     return activeTabId;
+  }
+
+  get tabsCount() {
+    return this.tabs.length;
   }
 
   get activeTabData() {

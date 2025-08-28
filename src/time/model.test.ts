@@ -13,8 +13,10 @@ describe('time', () => {
       updatePer: 100,
     });
 
-    await sleep(400);
-    vi.runAllTimers();
+    // biome-ignore lint/nursery/noFloatingPromises: <explanation>
+    sleep(400);
+
+    await vi.runAllTimersAsync();
 
     expect(spy).toHaveBeenCalledTimes(0);
 
@@ -25,7 +27,7 @@ describe('time', () => {
 
     setTimeout(() => dispose(), 1000);
 
-    vi.runAllTimers();
+    await vi.runAllTimersAsync();
 
     expect(time.value).toBeInstanceOf(Date);
     expect(spy).toHaveBeenCalledTimes(10);

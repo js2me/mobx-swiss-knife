@@ -5,18 +5,19 @@ export interface PageVisibility {
   isHidden: boolean;
 }
 
-let atom: IAtom | undefined;
+type IAtomWithListener = IAtom & { listener: () => void };
+
+let atom: IAtomWithListener | undefined;
 
 export const pageVisibility: PageVisibility = {
   get isVisible() {
     if (!atom) {
       atom = createAtom(
         process.env.NODE_ENV === 'production' ? '' : 'pageVisibility',
-        () =>
-          document.addEventListener('visibilitychange', atom!.reportChanged),
-        () =>
-          document.removeEventListener('visibilitychange', atom!.reportChanged),
-      );
+        () => document.addEventListener('visibilitychange', atom!.listener),
+        () => document.removeEventListener('visibilitychange', atom!.listener),
+      ) as IAtomWithListener;
+      atom.listener = atom.reportChanged.bind(atom);
     }
 
     atom.reportObserved();

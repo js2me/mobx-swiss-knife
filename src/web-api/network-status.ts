@@ -5,20 +5,29 @@ export interface NetworkStatus {
   isOffline: boolean;
 }
 
-let atom: IAtom | undefined;
+type IAtomWithListener = IAtom & { listener: () => void };
+
+let atom: IAtomWithListener | undefined;
 
 export const networkStatus: NetworkStatus = {
   get isOnline() {
     if (!atom) {
       atom = createAtom(
         process.env.NODE_ENV === 'production' ? '' : 'networkStatus',
-        () => globalThis.addEventListener('online', atom!.reportChanged),
-        () => globalThis.removeEventListener('online', atom!.reportChanged),
-      );
+        () => {
+          globalThis.addEventListener('online', atom!.listener);
+          globalThis.addEventListener('offline', atom!.listener);
+        },
+        () => {
+          globalThis.removeEventListener('online', atom!.listener);
+          globalThis.removeEventListener('offline', atom!.listener);
+        },
+      ) as IAtomWithListener;
+      atom.listener = atom.reportChanged.bind(atom);
     }
 
     atom.reportObserved();
-    return navigator.onLine;
+    return globalThis.navigator.onLine;
   },
   get isOffline() {
     return !this.isOnline;
