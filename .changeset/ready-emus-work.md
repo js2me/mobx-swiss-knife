@@ -2,4 +2,4 @@
 "mobx-swiss-knife": minor
 ---
 
-added `NetworkStatus` and `PageVisibility` utils for web api
+added `networkStatus` and `pageVisibility` utils for web api
