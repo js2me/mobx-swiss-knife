@@ -77,9 +77,13 @@ export class Stepper<StepData> {
     return this.activeStepIndex !== 0;
   }
 
-  addStep(step: StepData) {
+  addStep(step: StepData, position?: number) {
     if (!this.steps.includes(step)) {
-      this.steps.push(step);
+      if (position === undefined) {
+        this.steps.push(step);
+      } else {
+        this.steps.splice(position, 0, step);
+      }
     }
   }
 
