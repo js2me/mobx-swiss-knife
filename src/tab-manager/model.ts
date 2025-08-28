@@ -9,7 +9,7 @@ import {
 } from 'mobx';
 import { callFunction } from 'yummies/common';
 
-import { TabManagerConfig, TabManagerItem } from './model.types.js';
+import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager)

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { Paginator } from './model.js';
 
@@ -87,7 +87,7 @@ describe('Paginator', () => {
 
     const newPageSizes = [5, 15, 30];
     paginator.setPageSizes(newPageSizes);
-    expect(paginator['pageSizes']).toEqual(newPageSizes);
+    expect(paginator.pageSizes).toEqual(newPageSizes);
   });
 
   it('should reset to first page', () => {
@@ -177,7 +177,10 @@ describe('Paginator', () => {
       pageSizes: defaultPageSizes,
     });
 
-    const abortSpy = vi.spyOn(paginator['abortController'], 'abort');
+    // @ts-ignore
+    const innerAbortController = paginator.abortController;
+
+    const abortSpy = vi.spyOn(innerAbortController, 'abort');
     paginator.destroy();
     expect(abortSpy).toHaveBeenCalled();
   });
@@ -189,8 +192,9 @@ describe('Paginator', () => {
       abortSignal: abortController.signal,
     });
 
-    expect(paginator['abortController'].signal).toStrictEqual(
-      abortController.signal,
-    );
+    // @ts-ignore
+    const innerAbortController = paginator.abortController;
+
+    expect(innerAbortController.signal).toStrictEqual(abortController.signal);
   });
 });

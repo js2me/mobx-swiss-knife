@@ -13,7 +13,7 @@ describe('time', () => {
       updatePer: 100,
     });
 
-    sleep(400);
+    await sleep(400);
     vi.runAllTimers();
 
     expect(spy).toHaveBeenCalledTimes(0);

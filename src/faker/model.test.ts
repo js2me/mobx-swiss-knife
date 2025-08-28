@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { FakerLoader, createFakerLoader } from './model.js';
-import { FakerLoaderConfig } from './model.types.js';
+import { createFakerLoader, FakerLoader } from './model.js';
+import type { FakerLoaderConfig } from './model.types.js';
 
 describe('FakerLoader', () => {
   beforeEach(() => {

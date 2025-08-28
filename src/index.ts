@@ -1,5 +1,6 @@
 export * from './dates-comparator/index.js';
 export * from './faker/index.js';
+export * from './model-loader/index.js';
 export * from './paginator/index.js';
 export * from './socket/index.js';
 export * from './stepper/index.js';
@@ -9,5 +10,3 @@ export * from './theme/index.js';
 export * from './ticker/index.js';
 export * from './time/index.js';
 export * from './timers/index.js';
-export * from './model-loader/index.js';
-export * from './web-api/index.js';

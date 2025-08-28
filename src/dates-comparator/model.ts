@@ -1,13 +1,13 @@
 import { action, makeObservable, observable } from 'mobx';
 import { timeDuration } from 'yummies/date-time';
-import { Maybe } from 'yummies/utils/types';
+import type { Maybe } from 'yummies/utils/types';
 
-import {
-  DatesComparison,
+import type {
+  CompareDateType,
   DatesComparatorConfig,
+  DatesComparison,
   DatesToCompare,
   ResolvedCompareDateType,
-  CompareDateType,
 } from './model.types.js';
 
 /**

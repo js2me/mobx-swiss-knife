@@ -1,4 +1,4 @@
-import { MaybeFn } from 'yummies/utils/types';
+import type { MaybeFn } from 'yummies/utils/types';
 
 export interface StepperConfig<StepData> {
   steps?: MaybeFn<StepData[]>;

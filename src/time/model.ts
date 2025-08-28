@@ -2,7 +2,7 @@ import { LinkedAbortController } from 'linked-abort-controller';
 import {
   computed,
   createAtom,
-  IAtom,
+  type IAtom,
   makeObservable,
   observable,
   reaction,
@@ -10,7 +10,7 @@ import {
 } from 'mobx';
 import { callFunction } from 'yummies/common';
 
-import { TimeConfig } from './model.types.js';
+import type { TimeConfig } from './model.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/time)

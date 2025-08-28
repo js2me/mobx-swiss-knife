@@ -1,7 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { action, makeObservable, observable, reaction } from 'mobx';
 
-import { TickerConfig } from './model.types.js';
+import type { TickerConfig } from './model.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/ticker)

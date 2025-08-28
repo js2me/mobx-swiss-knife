@@ -1,8 +1,11 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { action, computed, makeObservable, observable } from 'mobx';
-import { AnyObject, Maybe } from 'yummies/utils/types';
+import type { AnyObject, Maybe } from 'yummies/utils/types';
 
-import { ModelLoadedState, ModelLoaderOptions } from './model-loader.types.js';
+import type {
+  ModelLoadedState,
+  ModelLoaderOptions,
+} from './model-loader.types.js';
 
 const storageAccessSymbol = Symbol.for('[lazy-models]');
 
@@ -101,6 +104,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     property: TProperty;
     fn: () => Promise<TModel>;
   }): TModel | null {
+    // biome-ignore lint/nursery/noFloatingPromises: this is special trick
     this.load(property, fn);
     return null;
   }

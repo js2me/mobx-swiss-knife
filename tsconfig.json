@@ -24,7 +24,6 @@
   },
   "include": [
     "src",
-    "post-build.mjs",
-    "./.eslintrc.cjs"
+    "post-build.mjs"
   ]
 }

@@ -3,7 +3,11 @@ import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 import { Storage } from '../../../storage/index.js';
 
-import { ColorScheme, Theme, TwoColorThemeStoreConfig } from './store.types.js';
+import type {
+  ColorScheme,
+  Theme,
+  TwoColorThemeStoreConfig,
+} from './store.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store)

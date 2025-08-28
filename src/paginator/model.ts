@@ -8,11 +8,11 @@ import {
   runInAction,
 } from 'mobx';
 
-import {
+import type {
   InputPaginationData,
   PaginationData,
-  PaginatorConfig,
   PaginationOffsetData,
+  PaginatorConfig,
 } from './model.types.js';
 
 /**

@@ -1,10 +1,10 @@
 import type { Faker } from '@faker-js/faker';
 import { computed, makeObservable } from 'mobx';
-import { AnyObject } from 'yummies/utils/types';
+import type { AnyObject } from 'yummies/utils/types';
 
 import { ModelLoader } from '../model-loader/model-loader.js';
 
-import { FakerLoaderConfig } from './model.types.js';
+import type { FakerLoaderConfig } from './model.types.js';
 
 declare const process: { env: { NODE_ENV?: string } };
 

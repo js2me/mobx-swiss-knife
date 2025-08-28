@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { sleep } from 'yummies/async';
-import { AnyObject } from 'yummies/utils/types';
+import type { AnyObject } from 'yummies/utils/types';
 
-import { ModelLoader, createModelLoader } from './model-loader.js';
-import { ModelLoaderOptions } from './model-loader.types.js';
+import { createModelLoader, ModelLoader } from './model-loader.js';
+import type { ModelLoaderOptions } from './model-loader.types.js';
 
 describe('ModelLoader', () => {
   beforeEach(() => {
@@ -61,7 +61,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      const storage = loader['storage'];
+      // @ts-ignore
+      const storage = loader.storage;
 
       expect(storage).toBeDefined();
       expect(context[Symbol.for('[lazy-models]')]).toBeDefined();
@@ -72,8 +73,10 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      const storage1 = loader['storage'];
-      const storage2 = loader['storage'];
+      // @ts-ignore
+      const storage1 = loader.storage;
+      // @ts-ignore
+      const storage2 = loader.storage;
 
       expect(storage1).toBe(storage2);
     });
@@ -141,7 +144,8 @@ describe('ModelLoader', () => {
       const loader = new ModelLoader(options);
 
       const mockData = { name: 'test' };
-      vi.spyOn(loader['storage'], 'get').mockReturnValue({
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'get').mockReturnValue({
         data: mockData,
         fn: () => Promise.resolve(true),
         key: '',
@@ -157,7 +161,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'get').mockReturnValue(undefined);
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'get').mockReturnValue(undefined);
 
       const result = loader.get('testProp');
 
@@ -172,7 +177,8 @@ describe('ModelLoader', () => {
       const loader = new ModelLoader(options);
 
       const mockError = new Error('Load error');
-      vi.spyOn(loader['storage'], 'get').mockReturnValue({
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'get').mockReturnValue({
         error: mockError,
         fn: () => Promise.resolve(true),
         key: '',
@@ -188,7 +194,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'get').mockReturnValue({
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'get').mockReturnValue({
         fn: () => Promise.resolve(true),
         key: '',
       });
@@ -226,7 +233,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'get').mockReturnValue({
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'get').mockReturnValue({
         data: null,
         fn: () => Promise.resolve(true),
         key: '',
@@ -244,7 +252,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'values').mockReturnValue([
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: null },
       ] as any);
 
@@ -258,7 +267,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'values').mockReturnValue([
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: { name: 'test' } },
       ] as any);
 
@@ -274,7 +284,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'values').mockReturnValue([
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'values').mockReturnValue([
         { error: new Error('Test error') },
       ] as any);
 
@@ -288,7 +299,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      vi.spyOn(loader['storage'], 'values').mockReturnValue([
+      // @ts-ignore
+      vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: { name: 'test' } },
       ] as any);
 
@@ -304,7 +316,8 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      const abortSpy = vi.spyOn(loader['abortController'], 'abort');
+      // @ts-ignore
+      const abortSpy = vi.spyOn(loader.abortController, 'abort');
 
       loader.destroy();
 
@@ -333,7 +346,8 @@ describe('ModelLoader', () => {
 
       expect(loader.isLoading('testKey')).toBe(false);
 
-      const abortSpy = vi.spyOn(loader['abortController'], 'abort');
+      // @ts-ignore
+      const abortSpy = vi.spyOn(loader.abortController, 'abort');
       loader.destroy();
       expect(abortSpy).toHaveBeenCalled();
     });

@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { Ticker, createTicker } from './model.js';
-import { TickerConfig } from './model.types.js';
+import { createTicker, Ticker } from './model.js';
+import type { TickerConfig } from './model.types.js';
 
 describe('Ticker', () => {
   beforeEach(() => {
@@ -81,7 +81,7 @@ describe('Ticker', () => {
       const config: TickerConfig = { ticksPer: 1000 };
       const ticker = new Ticker(config);
 
-      ticker['ticks'] = 5;
+      ticker.ticks = 5;
       expect(ticker.ticks).toBe(5);
 
       ticker.start();
@@ -144,7 +144,7 @@ describe('Ticker', () => {
       const config: TickerConfig = { ticksPer: 1000 };
       const ticker = new Ticker(config);
 
-      ticker['ticks'] = 5;
+      ticker.ticks = 5;
       expect(ticker.ticks).toBe(5);
 
       ticker.reset();
@@ -170,7 +170,8 @@ describe('Ticker', () => {
 
       ticker.start();
 
-      const abortSpy = vi.spyOn(ticker['abortController'], 'abort');
+      // @ts-ignore
+      const abortSpy = vi.spyOn(ticker.abortController, 'abort');
 
       ticker.destroy();
 
@@ -380,7 +381,7 @@ describe('Ticker', () => {
       const config: TickerConfig = { ticksPer: 1000 };
       const ticker = new Ticker(config);
 
-      ticker['ticks'] = 5;
+      ticker.ticks = 5;
 
       ticker.reset();
       ticker.reset();
@@ -424,7 +425,7 @@ describe('Ticker', () => {
       const config: TickerConfig = { ticksPer: 1000 };
       const ticker = new Ticker(config);
 
-      ticker['ticks'] = 5;
+      ticker.ticks = 5;
       ticker.reset();
       expect(ticker.ticks).toBe(0);
       expect(ticker.isRunning).toBe(false);
@@ -494,7 +495,8 @@ describe('Ticker', () => {
 
       ticker.start();
 
-      const abortSpy = vi.spyOn(ticker['abortController'], 'abort');
+      // @ts-ignore
+      const abortSpy = vi.spyOn(ticker.abortController, 'abort');
 
       ticker.destroy();
 

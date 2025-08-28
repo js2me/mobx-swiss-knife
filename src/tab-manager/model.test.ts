@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { TabManager, createTabManager } from './model.js';
-import { TabManagerConfig, TabManagerItem } from './model.types.js';
+import { createTabManager, TabManager } from './model.js';
+import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
 // Helper types
 type TestTab = TabManagerItem & { title: string; content: string };
@@ -30,11 +30,14 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
       expect(tabManager).toBeDefined();
-      expect(tabManager['tabs']).toEqual(tabs);
-      expect(tabManager['tabIndexesMap'].size).toBe(2);
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
+      expect(tabManager.tabs).toEqual(tabs);
+      expect(tabIndexesMap.size).toBe(2);
+      expect(tabIndexesMap.get('tab1')).toBe(0);
+      expect(tabIndexesMap.get('tab2')).toBe(1);
     });
 
     it('should handle empty tabs array', () => {
@@ -44,8 +47,11 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual([]);
-      expect(tabManager['tabIndexesMap'].size).toBe(0);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
+      expect(tabManager.tabs).toEqual([]);
+      expect(tabIndexesMap.size).toBe(0);
     });
 
     it('should handle readonly tabs array', () => {
@@ -60,8 +66,11 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual(tabs);
-      expect(tabManager['tabIndexesMap'].size).toBe(2);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
+      expect(tabManager.tabs).toEqual(tabs);
+      expect(tabIndexesMap.size).toBe(2);
     });
 
     it('should handle abort signal correctly', () => {
@@ -74,7 +83,8 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['abortController']).toBeDefined();
+      // @ts-ignore
+      expect(tabManager.abortController).toBeDefined();
     });
   });
 
@@ -96,16 +106,19 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual(initialTabs);
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
+      expect(tabManager.tabs).toEqual(initialTabs);
+      expect(tabIndexesMap.get('tab1')).toBe(0);
+      expect(tabIndexesMap.get('tab2')).toBe(1);
 
       tabManager.setTabs(newTabs);
 
-      expect(tabManager['tabs']).toEqual(newTabs);
-      expect(tabManager['tabIndexesMap'].get('tab3')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab4')).toBe(1);
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBeUndefined();
+      expect(tabManager.tabs).toEqual(newTabs);
+      expect(tabIndexesMap.get('tab3')).toBe(0);
+      expect(tabIndexesMap.get('tab4')).toBe(1);
+      expect(tabIndexesMap.get('tab1')).toBeUndefined();
     });
 
     it('should handle empty tabs array in setTabs', () => {
@@ -119,12 +132,15 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual(initialTabs);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
+      expect(tabManager.tabs).toEqual(initialTabs);
 
       tabManager.setTabs([]);
 
-      expect(tabManager['tabs']).toEqual([]);
-      expect(tabManager['tabIndexesMap'].size).toBe(0);
+      expect(tabManager.tabs).toEqual([]);
+      expect(tabIndexesMap.size).toBe(0);
     });
   });
 
@@ -560,18 +576,20 @@ describe('TabManager', () => {
       };
 
       const tabManager = new TabManager(config);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
 
-      expect(tabManager['tabs']).toEqual(initialTabs);
-      expect(tabManager['tabIndexesMap'].size).toBe(1);
+      expect(tabManager.tabs).toEqual(initialTabs);
+      expect(tabIndexesMap.size).toBe(1);
 
       tabsGetter.mockReturnValue(updatedTabs);
 
       tabManager.setTabs(updatedTabs);
 
-      expect(tabManager['tabs']).toEqual(updatedTabs);
-      expect(tabManager['tabIndexesMap'].size).toBe(2);
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
+      expect(tabManager.tabs).toEqual(updatedTabs);
+      expect(tabIndexesMap.size).toBe(2);
+      expect(tabIndexesMap.get('tab1')).toBe(0);
+      expect(tabIndexesMap.get('tab2')).toBe(1);
     });
   });
 
@@ -583,7 +601,7 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual([]);
+      expect(tabManager.tabs).toEqual([]);
     });
 
     it('should handle undefined tabs from getter', () => {
@@ -593,7 +611,7 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabs']).toEqual([]);
+      expect(tabManager.tabs).toEqual([]);
     });
 
     it('should handle invalid tab IDs gracefully', () => {
@@ -645,7 +663,7 @@ describe('TabManager', () => {
       const tabManager = createTabManager(config);
 
       expect(tabManager).toBeInstanceOf(TabManager);
-      expect(tabManager['tabs']).toEqual(tabs);
+      expect(tabManager.tabs).toEqual(tabs);
     });
   });
 
@@ -736,15 +754,18 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBe(1);
+      // @ts-ignore
+      const tabIndexesMap = tabManager.tabIndexesMap;
+
+      expect(tabIndexesMap.get('tab1')).toBe(0);
+      expect(tabIndexesMap.get('tab2')).toBe(1);
 
       tabManager.setTabs(updatedTabs);
 
-      expect(tabManager['tabIndexesMap'].get('tab3')).toBe(0);
-      expect(tabManager['tabIndexesMap'].get('tab1')).toBe(1);
-      expect(tabManager['tabIndexesMap'].get('tab4')).toBe(2);
-      expect(tabManager['tabIndexesMap'].get('tab2')).toBeUndefined();
+      expect(tabIndexesMap.get('tab3')).toBe(0);
+      expect(tabIndexesMap.get('tab1')).toBe(1);
+      expect(tabIndexesMap.get('tab4')).toBe(2);
+      expect(tabIndexesMap.get('tab2')).toBeUndefined();
     });
   });
 });

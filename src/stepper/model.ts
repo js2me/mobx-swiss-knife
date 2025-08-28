@@ -7,7 +7,7 @@ import {
 } from 'mobx';
 import { callFunction } from 'yummies/common';
 
-import { StepperConfig } from './model.types.js';
+import type { StepperConfig } from './model.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/stepper)

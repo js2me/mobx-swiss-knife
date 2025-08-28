@@ -1,7 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { action, makeObservable, observable } from 'mobx';
 
-import { SocketConfig } from './model.types.js';
+import type { SocketConfig } from './model.types.js';
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/socket)
@@ -92,7 +92,7 @@ export class Socket<
   protected reconnectTimer?: ReturnType<typeof setTimeout>;
 
   protected scheduleReconnect = () => {
-    if (this.reconnectTimer != undefined) {
+    if (this.reconnectTimer != null) {
       clearTimeout(this.reconnectTimer);
     }
 
@@ -110,7 +110,6 @@ export class Socket<
       this.instance.onmessage = this.onSocketMessage;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
     this.open(this.payload);
   };
@@ -146,7 +145,7 @@ export class Socket<
     this.refreshSocketState();
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: helpful to child classes
   onSocketOpen = (event: Event) => {
     this.refreshSocketState();
   };
