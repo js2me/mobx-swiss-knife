@@ -21,6 +21,6 @@ export const networkStatus: NetworkStatus = {
     return navigator.onLine;
   },
   get isOffline() {
-    return this.isOnline;
+    return !this.isOnline;
   },
 };

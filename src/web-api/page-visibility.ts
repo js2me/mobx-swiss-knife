@@ -23,6 +23,6 @@ export const pageVisibility: PageVisibility = {
     return document.visibilityState === 'visible';
   },
   get isHidden() {
-    return this.isVisible;
+    return !this.isVisible;
   },
 };
