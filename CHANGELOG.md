@@ -1,5 +1,17 @@
 # mobx-swiss-knife
 
+## 1.5.0
+
+### Minor Changes
+
+- [`2e40be0`](https://github.com/js2me/mobx-swiss-knife/commit/2e40be01d7fb0aa1ad28b1b847beccf7f5b503cd) Thanks [@js2me](https://github.com/js2me)! - add ability to set position for adding step (`addStep` for `Stepper`)
+
+- [`239ba5a`](https://github.com/js2me/mobx-swiss-knife/commit/239ba5a003a9622c93f70858638070162743e18f) Thanks [@js2me](https://github.com/js2me)! - added `networkStatus` and `pageVisibility` utils for web api
+
+### Patch Changes
+
+- [`2e69da7`](https://github.com/js2me/mobx-swiss-knife/commit/2e69da7b181c687c29d0a7162a66f674720213a5) Thanks [@js2me](https://github.com/js2me)! - added unit tests for Stepper, Storage, TabManager, Ticker models
+
 ## 1.4.0
 
 ### Minor Changes
