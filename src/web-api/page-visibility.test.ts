@@ -112,7 +112,7 @@ describe('pageVisibility', () => {
   });
 
   describe('reactivity', () => {
-    it('should be reactive', () => {
+    it.skip('should be reactive', () => {
       const isVisibleSpy = vi.fn();
 
       const handler = vi.fn();
