@@ -1,5 +1,5 @@
+import { reaction } from 'mobx';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-
 import { createTabManager, TabManager } from './model.js';
 import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
@@ -68,20 +68,6 @@ describe('TabManager', () => {
 
       expect(tabManager.tabs).toEqual(tabs);
       expect(tabIndexesMap.size).toBe(2);
-    });
-
-    it('should handle abort signal correctly', () => {
-      const tabs = [{ id: 'tab1', title: 'Tab 1', content: 'Content 1' }];
-
-      const config: TabManagerConfig<TestTab> = {
-        tabs: () => tabs,
-        abortSignal: mockAbortController.signal,
-      };
-
-      const tabManager = new TabManager(config);
-
-      // @ts-ignore
-      expect(tabManager.abortController).toBeDefined();
     });
   });
 
@@ -452,7 +438,7 @@ describe('TabManager', () => {
       expect(onChangeActiveTab).toHaveBeenCalledWith('tab2', tabs[0]);
     });
 
-    it('should not call onChangeActiveTab when using local active tab management', () => {
+    it('should call onChangeActiveTab even when using local active tab management', () => {
       const tabs = [
         { id: 'tab1', title: 'Tab 1', content: 'Content 1' },
         { id: 'tab2', title: 'Tab 2', content: 'Content 2' },
@@ -469,7 +455,7 @@ describe('TabManager', () => {
 
       tabManager.setActiveTab('tab2');
 
-      expect(onChangeActiveTab).not.toHaveBeenCalled();
+      expect(onChangeActiveTab).toHaveBeenCalled();
     });
 
     it('should handle numeric tab IDs in setActiveTab', () => {
@@ -489,6 +475,56 @@ describe('TabManager', () => {
       tabManager.setActiveTab(2);
 
       expect(tabManager.activeTab).toBe(2);
+    });
+
+    it('"activeTab" should be reactive', () => {
+      const tabs = [
+        { id: 1, title: 'Tab 1', content: 'Content 1' },
+        { id: 2, title: 'Tab 2', content: 'Content 2' },
+      ];
+
+      const tabManager = new TabManager({
+        tabs: () => tabs,
+      });
+
+      const spy = vi.fn();
+      reaction(
+        () => tabManager.activeTab,
+        (tab) => spy(tab),
+      );
+
+      tabManager.setActiveTab(1);
+      tabManager.setActiveTab(2);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(2);
+    });
+
+    it('"activeTabData" should be reactive', () => {
+      const tabs = [
+        { id: 1, title: 'Tab 1', content: 'Content 1' },
+        { id: 2, title: 'Tab 2', content: 'Content 2' },
+      ];
+
+      const tabManager = new TabManager({
+        tabs: () => tabs,
+      });
+
+      const spy = vi.fn();
+      reaction(
+        () => tabManager.activeTabData,
+        (tab) => spy(tab),
+      );
+
+      tabManager.setActiveTab(1);
+      tabManager.setActiveTab(2);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith({
+        content: 'Content 2',
+        id: 2,
+        title: 'Tab 2',
+      });
     });
 
     it('should handle boolean tab IDs in setActiveTab', () => {
@@ -527,25 +563,6 @@ describe('TabManager', () => {
       tabManager.destroy();
 
       expect(mockAbortController.signal.aborted).toBe(false);
-    });
-
-    it('should abort the internal abort controller by aborting provider abort signal', () => {
-      const tabs = [{ id: 'tab1', title: 'Tab 1', content: 'Content 1' }];
-
-      const config: TabManagerConfig<TestTab> = {
-        tabs: () => tabs,
-        abortSignal: mockAbortController.signal,
-      };
-
-      const tabManager = new TabManager(config);
-      // @ts-ignore
-      const innerAbortController = tabManager.abortController;
-
-      expect(innerAbortController.signal.aborted).toBe(false);
-
-      mockAbortController.abort();
-
-      expect(innerAbortController.signal.aborted).toBe(true);
     });
   });
 

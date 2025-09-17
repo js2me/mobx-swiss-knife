@@ -3,6 +3,7 @@ import { createAtom, type IAtom } from 'mobx';
 export interface NetworkStatus {
   isOnline: boolean;
   isOffline: boolean;
+  _atom?: IAtomWithListener;
 }
 
 type IAtomWithListener = IAtom & { listener: () => void };

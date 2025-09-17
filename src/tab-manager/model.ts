@@ -1,13 +1,4 @@
-import { LinkedAbortController } from 'linked-abort-controller';
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  reaction,
-  runInAction,
-} from 'mobx';
-import { callFunction } from 'yummies/common';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
@@ -15,40 +6,54 @@ import type { TabManagerConfig, TabManagerItem } from './model.types.js';
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager)
  */
 export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
-  private abortController: AbortController;
-
   /**
    * This is needed ONLY WHEN `getActiveTab` IS NOT SET
    */
   private localActiveTab!: T['id'];
 
-  tabs!: ReadonlyArray<T> | Array<T>;
+  private localSettedTabs?: ReadonlyArray<T> | Array<T>;
 
-  protected tabIndexesMap!: Map<T['id'], number>;
+  get tabs() {
+    if (this.localSettedTabs) {
+      return this.localSettedTabs;
+    }
 
-  constructor(private config: TabManagerConfig<T>) {
-    this.abortController = new LinkedAbortController(config.abortSignal);
+    if (typeof this.config.tabs === 'function') {
+      return this.config.tabs() ?? [];
+    }
 
-    observable.ref(this, 'syncedActiveTab');
-    action(this, 'setTabs');
-    computed.struct(this, 'activeTab');
-    computed.struct(this, 'activeTabData');
-    computed.struct(this, 'tabsCount');
-    observable.ref(this, 'tabs');
-    observable.ref(this, 'tabIndexesMap');
-
-    makeObservable(this);
-
-    reaction(
-      () => callFunction(this.config.tabs),
-      (tabs) => this.setTabs(tabs ?? []),
-      { signal: this.abortController.signal, fireImmediately: true },
-    );
+    return this.config.tabs ?? [];
   }
 
+  protected get tabIndexesMap(): Map<T['id'], number> {
+    return new Map(this.tabs.map((tab, i) => [tab.id, i]));
+  }
+
+  constructor(private config: TabManagerConfig<T>) {
+    observable.ref(this, 'localActiveTab');
+    observable.ref(this, 'localSettedTabs');
+    action(this, 'setTabs');
+    action(this, 'setActiveTab');
+    computed.struct(this, 'activeTab');
+    computed.struct(this, 'tabs');
+    computed(this, 'tabIndexesMap');
+    computed.struct(this, 'activeTabData');
+    computed.struct(this, 'tabsCount');
+
+    makeObservable(this);
+  }
+
+  /**
+   * Sets local setted tabs
+   * If you are using this method - it means that you are
+   * using self controlled tabs.
+   * So `tabManager.tabs` will be always equal to `tabs` which
+   * you are passed to this method
+   *
+   * :NOTE: config.tabs function will be ignored!
+   */
   setTabs = (tabs: Array<T> | ReadonlyArray<T>) => {
-    this.tabs = tabs;
-    this.tabIndexesMap = new Map(this.tabs.map((tab, i) => [tab.id, i]));
+    this.localSettedTabs = tabs;
   };
 
   getTabData = (tabId: T['id']): T => {
@@ -81,22 +86,21 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
   }
 
   setActiveTab = (activeTabId: T['id']) => {
-    if (this.activeTabData.id === activeTabId) {
+    if (this.activeTab === activeTabId) {
       return;
     }
 
-    if (this.config.getActiveTab && this.config.onChangeActiveTab) {
-      this.config.onChangeActiveTab(activeTabId, this.activeTabData);
-    } else {
-      runInAction(() => {
-        this.localActiveTab = activeTabId;
-      });
+    this.config.onChangeActiveTab?.(activeTabId, this.activeTabData);
+
+    if (this.config.getActiveTab == null) {
+      this.localActiveTab = activeTabId;
     }
   };
 
-  destroy() {
-    this.abortController.abort();
-  }
+  /**
+   * @deprecated nothing to destroy
+   */
+  destroy() {}
 }
 
 /**

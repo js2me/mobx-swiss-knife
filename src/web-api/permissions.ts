@@ -18,7 +18,7 @@ const createPermissionInfo = (name: PermissionName): PermissionInfo => {
     get state(): PermissionState {
       if (!atoms.has(name) && 'permissions' in navigator) {
         const atom = createAtom(
-          process.env.NODE_ENV === 'production' ? '' : 'geolocationStatus',
+          process.env.NODE_ENV === 'production' ? '' : `${name}_permission`,
           () => {
             if (!atom.permissionStatus) {
               navigator.permissions
