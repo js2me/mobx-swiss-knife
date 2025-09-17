@@ -1,5 +1,15 @@
 # mobx-swiss-knife
 
+## 1.6.0
+
+### Minor Changes
+
+- [`ecc63bf`](https://github.com/js2me/mobx-swiss-knife/commit/ecc63bf3b8f54d6d1ff13705734529583a2b0208) Thanks [@js2me](https://github.com/js2me)! - add geolocation web api
+
+### Patch Changes
+
+- [`ecc63bf`](https://github.com/js2me/mobx-swiss-knife/commit/ecc63bf3b8f54d6d1ff13705734529583a2b0208) Thanks [@js2me](https://github.com/js2me)! - fixed `TabManager` (local active tab)
+
 ## 1.5.0
 
 ### Minor Changes
