@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.7.0
+
+### Minor Changes
+
+- [`2498305`](https://github.com/js2me/mobx-swiss-knife/commit/2498305f59bc91f4f2c1a208cd884a3984c260cc) Thanks [@js2me](https://github.com/js2me)! - moved `web-api` directory to another package (`mobx-web-api`). Minor change because this dir was not declared nowhere
+
 ## 1.6.0
 
 ### Minor Changes
