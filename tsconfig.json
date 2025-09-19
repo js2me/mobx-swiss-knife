@@ -24,6 +24,6 @@
   },
   "include": [
     "src",
-    "post-build.mjs"
+    "publish.mjs"
   ]
 }
