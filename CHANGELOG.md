@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.8.0
+
+### Minor Changes
+
+- [`6a171df`](https://github.com/js2me/mobx-swiss-knife/commit/6a171df3432976d92166bd6c5fa261be81c09e17) Thanks [@js2me](https://github.com/js2me)! - refactor - migrate to zshy (build)
+
 ## 1.7.0
 
 ### Minor Changes
