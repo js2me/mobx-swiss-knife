@@ -51,9 +51,6 @@ importers:
       js2me-biome-config:
         specifier: ^1.0.3
         version: 1.0.3
-      js2me-exports-post-build-script:
-        specifier: ^5.5.0
-        version: 5.5.0
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
@@ -66,6 +63,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      sborshik:
+        specifier: ^1.0.10
+        version: 1.0.10
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1607,9 +1607,6 @@ packages:
   js2me-biome-config@1.0.3:
     resolution: {integrity: sha512-DDFZxXXynbz6alYaHMCZ3oyeZQPpqaRqeyLg2uJl8z9uaKSJv4eiBQV1yScMhnMqwuE/3UivlW2mYZ7NOsr4ig==}
 
-  js2me-exports-post-build-script@5.5.0:
-    resolution: {integrity: sha512-tlsSfC7+jgE/hvqSo06Nq2W/JrxVBLT4+OoQRezT/a6lR2PK3ujfeKvlP/7U1+RKdu/WJmM8vUSEi8J+9tjoCw==}
-
   jsdom@26.1.0:
     resolution: {integrity: sha512-Cvc9WUhxSMEo4McES3P7oK3QaXldCfNWp7pl2NNeiIFlCoLr3kfq9kb1fxftiwk1FLV7CvpvDfonxtzUDeSOPg==}
     engines: {node: '>=18'}
@@ -2127,6 +2124,10 @@ packages:
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
+
+  sborshik@1.0.10:
+    resolution: {integrity: sha512-odrSTmg+R8ucIc1hK2lHioiZPuvbm/pbHgklANGZPTmJjZV+NnE6oTQ3T+ykvqmlkvfZEJGGrwKVrvlOQ2kZZg==}
+    hasBin: true
 
   semver-diff@3.1.1:
     resolution: {integrity: sha512-GX0Ix/CJcHyB8c4ykpHGIAvLyOwOobtM/8d+TQkAd81/bEjgPHrfba41Vpesr7jX/t8Uh+R3EX9eAS5be+jQYg==}
@@ -4195,14 +4196,6 @@ snapshots:
 
   js2me-biome-config@1.0.3: {}
 
-  js2me-exports-post-build-script@5.5.0:
-    dependencies:
-      gh-release: 7.0.2
-      simple-git: 3.27.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
   jsdom@26.1.0:
     dependencies:
       cssstyle: 4.6.0
@@ -4707,6 +4700,14 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
+
+  sborshik@1.0.10:
+    dependencies:
+      gh-release: 7.0.2
+      simple-git: 3.27.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
 
   semver-diff@3.1.1:
     dependencies:
