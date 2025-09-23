@@ -10,7 +10,7 @@
     "prebuild": "pnpm clean && pnpm check",
     "build:watch": "pnpm build && nodemon --watch src --ext ts,tsx --exec \"pnpm build\"",
     "build": "sborshik build --fillDist",
-    "pub": "pnpm build && sborshik publish --openDistDir",
+    "pub": "pnpm build && sborshik publish --useDistDir",
     "pub:patch": "PUBLISH_VERSION=patch pnpm pub",
     "pub:minor": "PUBLISH_VERSION=minor pnpm pub",
     "pub:major": "PUBLISH_VERSION=major pnpm pub",
