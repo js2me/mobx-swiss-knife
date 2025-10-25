@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.8.1
+
+### Patch Changes
+
+- [`84005a0`](https://github.com/js2me/mobx-swiss-knife/commit/84005a03aacaf07086897d0c40f057f3d75f5652) Thanks [@js2me](https://github.com/js2me)! - fixed zshy build
+
 ## 1.8.0
 
 ### Minor Changes
