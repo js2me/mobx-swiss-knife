@@ -1,49 +1,23 @@
-import { defineConfig } from 'vitepress';
+import { defineDocsVitepressConfig } from "sborshik/vitepress";
+import { ConfigsManager } from "sborshik/utils/configs-manager";
 
-import path from 'path';
-import fs from 'fs';
+const configs = ConfigsManager.create("../")
 
-const { version, name: packageName, author, license } = JSON.parse(
-  fs.readFileSync(
-    path.resolve(__dirname, '../../package.json'),
-    { encoding: 'utf-8' },
-  ),
-);
-
-export default defineConfig({
-  title: packageName.replace(/-/g, ' '),
-  description: `${packageName.replace(/-/g, ' ')} documentation`,
-  base: `/${packageName}/`,
-  lastUpdated: true,
-  head: [
-    ['link', { rel: 'icon', href: `/${packageName}/logo.png` }],
-  ],
-  transformHead: ({ pageData, head }) => {
-    head.push(['meta', { property: 'og:site_name', content: packageName }]);
-    head.push(['meta', { property: 'og:title', content: pageData.title }]);
-    if (pageData.description) {
-      head.push(['meta', { property: 'og:description', content: pageData.description }]);   
-    }
-    head.push(['meta', { property: 'og:image', content: `https://${author}.github.io/${packageName}/logo.png` }]);
-
-    return head
-  },
+export default defineDocsVitepressConfig(configs, {
+  appearance: 'dark',
+  createdYear: '2025',
   themeConfig: {
-    logo: '/logo.png',
-    search: {
-      provider: 'local'
-    },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Introduction', link: '/introduction/getting-started' },
       {
-        text: `v${version}`,
+        text: `${configs.package.version}`,
         items: [
           {
             items: [
               {
-                text: `v${version}`,
-                link: `https://github.com/${author}/${packageName}/releases/tag/v${version}`,
+                text: `${configs.package.version}`,
+                link: `https://github.com/${configs.package.author}/${configs.package.name}/releases/tag/${configs.package.version}`,
               },
             ],
           },
@@ -79,15 +53,6 @@ export default defineConfig({
           { text: 'Timers', link: '/tools/timers' },
         ]
       }
-    ],
-
-    footer: {
-      message: `Released under the ${license} License.`,
-      copyright: `Copyright © 2025-PRESENT ${author}`,
-    },
-
-    socialLinks: [
-      { icon: 'github', link: `https://github.com/${author}/${packageName}` },
     ],
   },
 });
