@@ -1,5 +1,6 @@
 export * from './dates-comparator/index.js';
 export * from './faker/index.js';
+export * from './keyboard-handler/index.js';
 export * from './model-loader/index.js';
 export * from './paginator/index.js';
 export * from './socket/index.js';
