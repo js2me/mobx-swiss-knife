@@ -43,6 +43,11 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     };
     this.isActivated = !!(this.activateStrategy.type === 'immidiately');
 
+    observable.ref(this, 'isActivated');
+    computed.struct(this, 'actions');
+    action.bound(this, 'handleKeyboardClick');
+    makeObservable(this);
+
     if (this.activateStrategy.type === 'element-focus') {
       const ref = this.activateStrategy.ref;
       let nodeAbortController = new LinkedAbortController();
@@ -83,11 +88,6 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
         signal: this.abortController.signal,
       });
     }
-
-    observable.ref(this, 'isActivated');
-    computed.struct(this, 'actions');
-    action.bound(this, 'handleKeyboardClick');
-    makeObservable(this);
   }
 
   activate = () => {
