@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.9.1
+
+### Patch Changes
+
+- [`3974e05`](https://github.com/js2me/mobx-swiss-knife/commit/3974e0561693391e7acaec3f55cb522bb20893ed) Thanks [@js2me](https://github.com/js2me)! - fixed keyboard handler action bound
+
 ## 1.9.0
 
 ### Minor Changes
