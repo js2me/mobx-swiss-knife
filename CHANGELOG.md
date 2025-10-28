@@ -1,5 +1,13 @@
 # mobx-swiss-knife
 
+## 1.9.0
+
+### Minor Changes
+
+- [`e14ed26`](https://github.com/js2me/mobx-swiss-knife/commit/e14ed26b37e6153772844face4c3841145241d1b) Thanks [@js2me](https://github.com/js2me)! - [internal] unify bundle (use vite)
+
+- [`e14ed26`](https://github.com/js2me/mobx-swiss-knife/commit/e14ed26b37e6153772844face4c3841145241d1b) Thanks [@js2me](https://github.com/js2me)! - added `KeyboardHandler` utility
+
 ## 1.8.1
 
 ### Patch Changes
