@@ -1,5 +1,5 @@
 import type { Ref } from 'yummies/mobx';
-import type { Maybe, MaybeFn } from 'yummies/utils/types';
+import type { Maybe, MaybeFn } from 'yummies/types';
 
 export interface KeyboardHandlerAction {
   /**

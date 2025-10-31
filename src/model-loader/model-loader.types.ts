@@ -1,4 +1,4 @@
-import type { AnyObject } from 'yummies/utils/types';
+import type { AnyObject } from 'yummies/types';
 
 export interface ModelLoadedState {
   key: any;

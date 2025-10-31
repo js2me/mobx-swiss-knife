@@ -1,4 +1,4 @@
-import type { Maybe, MaybeFn } from 'yummies/utils/types';
+import type { Maybe, MaybeFn } from 'yummies/types';
 
 export type TabManagerItem = { id: string | number | boolean };
 

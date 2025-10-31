@@ -1,6 +1,6 @@
 import type { Faker } from '@faker-js/faker';
 import { computed, makeObservable } from 'mobx';
-import type { AnyObject } from 'yummies/utils/types';
+import type { AnyObject } from 'yummies/types';
 
 import { ModelLoader } from '../model-loader/model-loader.js';
 

@@ -1,6 +1,6 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { AnyObject, Maybe } from 'yummies/utils/types';
+import type { AnyObject, Maybe } from 'yummies/types';
 
 import type {
   ModelLoadedState,

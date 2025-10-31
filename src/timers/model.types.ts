@@ -1,5 +1,5 @@
 import type { debounce, throttle } from 'lodash-es';
-import type { PartialKeys } from 'yummies/utils/types';
+import type { PartialKeys } from 'yummies/types';
 
 export interface TimerConfig {
   id: string;

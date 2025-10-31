@@ -1,4 +1,4 @@
-import type { MaybeFn } from 'yummies/utils/types';
+import type { MaybeFn } from 'yummies/types';
 
 export interface TimeConfig<TValue = Date> {
   abortSignal?: AbortSignal;

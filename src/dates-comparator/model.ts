@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { timeDuration } from 'yummies/date-time';
-import type { Maybe } from 'yummies/utils/types';
+import type { Maybe } from 'yummies/types';
 
 import type {
   CompareDateType,

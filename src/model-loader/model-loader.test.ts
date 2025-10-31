@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { sleep } from 'yummies/async';
-import type { AnyObject } from 'yummies/utils/types';
+import type { AnyObject } from 'yummies/types';
 
 import { createModelLoader, ModelLoader } from './model-loader.js';
 import type { ModelLoaderOptions } from './model-loader.types.js';
