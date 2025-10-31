@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.10.0
+
+### Minor Changes
+
+- [`01580e3`](https://github.com/js2me/mobx-swiss-knife/commit/01580e3eaa6a635cb209ac65db8c3cd36b021e87) Thanks [@js2me](https://github.com/js2me)! - [internal] migration to yummies 6.x
+
 ## 1.9.1
 
 ### Patch Changes
