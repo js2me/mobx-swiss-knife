@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.11.0
+
+### Minor Changes
+
+- [`68f17eb`](https://github.com/js2me/mobx-swiss-knife/commit/68f17eb354ab2d0cf6ed1f535f398b8eb662522b) Thanks [@js2me](https://github.com/js2me)! - KeyboardHandler: added setActions method + support Command key
+
 ## 1.10.0
 
 ### Minor Changes
