@@ -8,10 +8,25 @@ export interface KeyboardHandlerAction {
    *
    * [MDN Reference for keys](https://developer.mozilla.org/docs/Web/API/KeyboardEvent/key)
    *
+   *
+   * Specilal keys:
+   * Ctrl
+   * Shift
+   * Alt
+   * Meta
+   * Win
+   * Windows
+   * Command
+   * ⌘
+   *
    * @example
    * 'Shift'
    * 'Shift+Enter'
    * 'Enter'
+   * '⌘+Enter'
+   * 'Win+Enter'
+   * 'Meta+Enter'
+   *
    */
   shortcuts: string[];
   disabled?: MaybeFn<Maybe<boolean>>;

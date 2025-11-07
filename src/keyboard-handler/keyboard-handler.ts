@@ -8,6 +8,7 @@ import {
   runInAction,
 } from 'mobx';
 import { callFunction } from 'yummies/common';
+import type { Maybe, MaybeFn } from 'yummies/types';
 import type {
   KeyboardHandlerAction,
   KeyboardHandlerActivationStrategy,
@@ -24,6 +25,8 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
 
   protected activateStrategy: KeyboardHandlerActivationStrategy;
 
+  private localActions: MaybeFn<Maybe<Action[]>>;
+
   /**
    * Is user using keyboard input
    */
@@ -33,7 +36,82 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
    * User actions
    */
   get actions() {
-    return callFunction(this.config.actions) ?? [];
+    const usingActions = this.localActions ?? this.config.actions;
+    return callFunction(usingActions) ?? [];
+  }
+
+  setActions(actions: Maybe<Action[]>) {
+    this.localActions = actions;
+  }
+
+  activate = () => {
+    if (this.isActivated) {
+      return;
+    }
+    this.isActivated = true;
+    this.config.onActivate?.();
+  };
+
+  deactivate = () => {
+    if (!this.isActivated) {
+      return;
+    }
+    this.isActivated = false;
+    this.config.onDeactivate?.();
+  };
+
+  protected handleKeyboardClick(event: KeyboardEvent) {
+    this.config.onKeyClick?.(event);
+
+    if (this.activateStrategy.type === 'keyclick') {
+      this.activate();
+    }
+
+    if (!this.isActivated) {
+      return;
+    }
+
+    for (let i = 0; i < this.actions.length; i++) {
+      const action = this.actions[i];
+      const disabled = callFunction(action.disabled);
+
+      if (disabled) {
+        continue;
+      }
+
+      for (let j = 0; j < action.shortcuts.length; j++) {
+        const shortcut = action.shortcuts[j];
+
+        const keys = shortcut.split('+');
+
+        if (keys.every((key) => this.checkKey(event, key))) {
+          runInAction(() => {
+            action.action(event);
+          });
+          return;
+        }
+      }
+    }
+  }
+
+  checkKey(event: KeyboardEvent, key: string) {
+    if (key === 'Shift' && event.shiftKey) return true;
+    if (key === 'Ctrl' && event.ctrlKey) return true;
+    if (key === 'Alt' && event.altKey) return true;
+    if (
+      (key === 'Windows' ||
+        key === 'Meta' ||
+        key === 'Command' ||
+        key === '⌘' ||
+        key === 'Win') &&
+      event.metaKey
+    )
+      return true;
+    return key === event.key;
+  }
+
+  destroy(): void {
+    this.abortController.abort();
   }
 
   constructor(protected config: KeyboardHandlerConfig<Action>) {
@@ -44,8 +122,10 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     this.isActivated = !!(this.activateStrategy.type === 'immidiately');
 
     observable.ref(this, 'isActivated');
+    observable.ref(this, 'localActions');
     computed.struct(this, 'actions');
     action.bound(this, 'handleKeyboardClick');
+    action.bound(this, 'setActions');
     makeObservable(this);
 
     if (this.activateStrategy.type === 'element-focus') {
@@ -88,67 +168,6 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
         signal: this.abortController.signal,
       });
     }
-  }
-
-  activate = () => {
-    if (this.isActivated) {
-      return;
-    }
-    this.isActivated = true;
-    this.config.onActivate?.();
-  };
-
-  deactivate = () => {
-    if (!this.isActivated) {
-      return;
-    }
-    this.isActivated = false;
-    this.config.onDeactivate?.();
-  };
-
-  protected handleKeyboardClick(event: KeyboardEvent) {
-    this.config.onKeyClick?.(event);
-
-    if (this.activateStrategy.type === 'keyclick') {
-      this.activate();
-    }
-
-    if (!this.isActivated) {
-      return;
-    }
-
-    for (const action of this.actions) {
-      const disabled = callFunction(action.disabled);
-
-      if (disabled) {
-        continue;
-      }
-
-      for (const shortcut of action.shortcuts) {
-        const combinatedShortcuts = shortcut.split('+');
-        if (
-          combinatedShortcuts.every((shortcut) =>
-            this.checkShortcut(event, shortcut),
-          )
-        ) {
-          runInAction(() => {
-            action.action(event);
-          });
-          return;
-        }
-      }
-    }
-  }
-
-  checkShortcut(event: KeyboardEvent, shortcut: string) {
-    if (shortcut === 'Shift' && event.shiftKey) return true;
-    if (shortcut === 'Ctrl' && event.ctrlKey) return true;
-    if (shortcut === 'Alt' && event.altKey) return true;
-    return shortcut === event.key;
-  }
-
-  destroy(): void {
-    this.abortController.abort();
   }
 }
 
