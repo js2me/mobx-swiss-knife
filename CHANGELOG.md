@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.12.0
+
+### Minor Changes
+
+- [`cf5842e`](https://github.com/js2me/mobx-swiss-knife/commit/cf5842eb8f95dd4c204d209f85f7bcd6bec0b734) Thanks [@js2me](https://github.com/js2me)! - KeyboardHandler: support `code` property
+
 ## 1.11.0
 
 ### Minor Changes
