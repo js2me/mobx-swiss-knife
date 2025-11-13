@@ -3,10 +3,11 @@ import type { Maybe, MaybeFn } from 'yummies/types';
 
 export interface KeyboardHandlerAction {
   /**
-   * Syntax: key1+key2
+   * Syntax: key1+key2+code
    *
    *
    * [MDN Reference for keys](https://developer.mozilla.org/docs/Web/API/KeyboardEvent/key)
+   * [MDN Reference for codes](https://developer.mozilla.org/docs/Web/API/KeyboardEvent/code)
    *
    *
    * Specilal keys:

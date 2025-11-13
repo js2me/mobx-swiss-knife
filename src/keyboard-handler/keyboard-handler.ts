@@ -96,7 +96,7 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
 
   checkKey(event: KeyboardEvent, key: string) {
     if (key === 'Shift' && event.shiftKey) return true;
-    if (key === 'Ctrl' && event.ctrlKey) return true;
+    if ((key === 'Ctrl' || key === 'Control') && event.ctrlKey) return true;
     if (key === 'Alt' && event.altKey) return true;
     if (
       (key === 'Windows' ||
@@ -107,7 +107,8 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
       event.metaKey
     )
       return true;
-    return key === event.key;
+
+    return key === event.key || key === event.code;
   }
 
   destroy(): void {
