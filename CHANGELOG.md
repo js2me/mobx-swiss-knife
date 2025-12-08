@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.13.1
+
+### Patch Changes
+
+- [`1da5e32`](https://github.com/js2me/mobx-swiss-knife/commit/1da5e32f3319b00fb41217e15f0ee9c468e4a970) Thanks [@js2me](https://github.com/js2me)! - fix typings for `getTabData` for `TabManager`
+
 ## 1.13.0
 
 ### Minor Changes
