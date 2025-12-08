@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.13.0
+
+### Minor Changes
+
+- [`cf09230`](https://github.com/js2me/mobx-swiss-knife/commit/cf0923076bfa169ec7173fed0d0ce7fda78dde13) Thanks [@js2me](https://github.com/js2me)! - pass tabs to `getActiveTab` method (TabManager)
+
 ## 1.12.0
 
 ### Minor Changes
