@@ -56,9 +56,9 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
     this.localSettedTabs = tabs;
   };
 
-  getTabData = (tabId: T['id']): T => {
+  getTabData = <TId extends T['id']>(tabId: TId): Extract<T, { id: TId }> => {
     const index = this.tabIndexesMap.get(tabId)!;
-    return this.tabs[index];
+    return this.tabs[index] as Extract<T, { id: TId }>;
   };
 
   get activeTab(): T['id'] {
