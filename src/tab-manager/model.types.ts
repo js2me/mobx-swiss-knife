@@ -20,7 +20,9 @@ export interface TabManagerConfig<
    * If you are using this property it means you are using
    * external active tab statement
    */
-  getActiveTab?: () => Maybe<NoInfer<TItem>['id']>;
+  getActiveTab?: (
+    tabs: readonly NoInfer<TItem>[],
+  ) => Maybe<NoInfer<TItem>['id']>;
   /**
    * This is callback which calls always when you set active tab
    * using `setActiveTab` method

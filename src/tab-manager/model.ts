@@ -63,7 +63,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
 
   get activeTab(): T['id'] {
     const tabId = this.config.getActiveTab
-      ? this.config.getActiveTab()
+      ? this.config.getActiveTab(this.tabs)
       : this.localActiveTab;
 
     const activeTabId = tabId ?? this.config.fallbackTab ?? this.tabs[0].id;
