@@ -90,7 +90,9 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
       return;
     }
 
-    this.config.onChangeActiveTab?.(activeTabId, this.activeTabData);
+    const tabData = this.getTabData(activeTabId);
+
+    this.config.onChangeActiveTab?.(tabData.id, tabData);
 
     if (this.config.getActiveTab == null) {
       this.localActiveTab = activeTabId;
