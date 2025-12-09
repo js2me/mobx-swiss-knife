@@ -435,7 +435,7 @@ describe('TabManager', () => {
 
       tabManager.setActiveTab('tab2');
 
-      expect(onChangeActiveTab).toHaveBeenCalledWith('tab2', tabs[0]);
+      expect(onChangeActiveTab).toHaveBeenCalledWith('tab2', tabs[1]);
     });
 
     it('should call onChangeActiveTab even when using local active tab management', () => {
