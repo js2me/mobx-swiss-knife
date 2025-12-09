@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.13.2
+
+### Patch Changes
+
+- [`aba889c`](https://github.com/js2me/mobx-swiss-knife/commit/aba889ce4a916afc93cd342d9caa21ec80e28e4f) Thanks [@js2me](https://github.com/js2me)! - fix setActiveTab in TabManager
+
 ## 1.13.1
 
 ### Patch Changes

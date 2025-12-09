@@ -1,6 +1,6 @@
 {
   "name": "mobx-swiss-knife",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "scripts": {
     "prepare": "pnpm dev:install-hooks",
     "clean": "rimraf dist",
