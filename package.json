@@ -44,7 +44,7 @@
     "@types/lodash-es": "^4.17.12",
     "linked-abort-controller": "^1.1.0",
     "lodash-es": "^4.17.21",
-    "yummies": "^6.0.0"
+    "yummies": "^7.0.1"
   },
   "peerDependencies": {
     "mobx": "^6.12.4"
