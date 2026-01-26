@@ -80,6 +80,29 @@ describe('ModelLoader', () => {
 
       expect(storage1).toBe(storage2);
     });
+
+    it('should clear and remove storage on abort', () => {
+      const context = {} as AnyObject;
+      const options: ModelLoaderOptions<any> = { context };
+      const loader = new ModelLoader(options);
+
+      const storage = (loader as any).storage;
+      storage.set('testKey', {
+        key: 'testKey',
+        fn: () => Promise.resolve(true),
+      });
+
+      const descriptor = Object.getOwnPropertyDescriptor(
+        context,
+        Symbol.for('[lazy-models]'),
+      );
+      expect(descriptor?.configurable).toBe(true);
+
+      loader.destroy();
+
+      expect(storage.size).toBe(0);
+      expect(context[Symbol.for('[lazy-models]')]).toBeUndefined();
+    });
   });
 
   describe('load method', () => {

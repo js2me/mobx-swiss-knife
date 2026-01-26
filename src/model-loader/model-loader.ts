@@ -34,7 +34,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   protected get storage(): Map<any, ModelLoadedState> {
     if (!this.context[storageAccessSymbol]) {
       Object.defineProperty(this.context, storageAccessSymbol, {
-        configurable: false,
+        configurable: true,
         enumerable: false,
         writable: false,
         value: observable.map<any, ModelLoadedState>(),
