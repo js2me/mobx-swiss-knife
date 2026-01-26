@@ -15,11 +15,11 @@ const storageAccessSymbol = Symbol.for('[lazy-models]');
 export class ModelLoader<TContext extends AnyObject = AnyObject> {
   private abortController: LinkedAbortController;
 
-  private context: TContext;
+  private ctx: TContext;
 
   constructor(private options: ModelLoaderOptions<TContext>) {
     this.abortController = new LinkedAbortController(options.abortSignal);
-    this.context = options.context;
+    this.ctx = options.context;
 
     computed.struct(this, 'hasLoadingModels');
     computed.struct(this, 'hasErroredModels');
@@ -32,8 +32,8 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   }
 
   protected get storage(): Map<any, ModelLoadedState> {
-    if (!this.context[storageAccessSymbol]) {
-      Object.defineProperty(this.context, storageAccessSymbol, {
+    if (!this.ctx[storageAccessSymbol]) {
+      Object.defineProperty(this.ctx, storageAccessSymbol, {
         configurable: true,
         enumerable: false,
         writable: false,
@@ -41,14 +41,14 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
       });
 
       this.abortController.signal.addEventListener('abort', () => {
-        if (this.context[storageAccessSymbol]) {
-          this.context[storageAccessSymbol].clear();
-          delete this.context[storageAccessSymbol];
+        if (this.ctx[storageAccessSymbol]) {
+          this.ctx[storageAccessSymbol].clear();
+          delete this.ctx[storageAccessSymbol];
         }
       });
     }
 
-    return this.context[storageAccessSymbol];
+    return this.ctx[storageAccessSymbol];
   }
 
   /**
@@ -124,7 +124,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
       data,
     });
 
-    this.context[property as keyof TContext] = data;
+    this.ctx[property as keyof TContext] = data;
 
     this.options.onLoadSucceed?.(data, property);
 
