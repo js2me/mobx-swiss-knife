@@ -17,4 +17,5 @@
 
 _Set of various utilities designed to simplify development on **MobX**_  
 
+
 ## Documentation is [here](https://js2me.github.io/mobx-swiss-knife/) 
