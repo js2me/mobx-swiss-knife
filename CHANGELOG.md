@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.14.2
+
+### Patch Changes
+
+- [`00899b3`](https://github.com/js2me/mobx-swiss-knife/commit/00899b3ba037413a1a745b9370ca333c15c58273) Thanks [@js2me](https://github.com/js2me)! - fixed typings for connect method in ModelLoader
+
 ## 1.14.1
 
 ### Patch Changes
