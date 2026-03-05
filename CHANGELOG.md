@@ -1,5 +1,13 @@
 # mobx-swiss-knife
 
+## 1.14.1
+
+### Patch Changes
+
+- [`177f306`](https://github.com/js2me/mobx-swiss-knife/commit/177f3061b9d036dc54c7a2bb913eb3a92b56940a) Thanks [@js2me](https://github.com/js2me)! - try to fix handle load model succeed for model loade
+
+- [`9becdde`](https://github.com/js2me/mobx-swiss-knife/commit/9becdded956645525f9d97696689c1ea62674057) Thanks [@js2me](https://github.com/js2me)! - fixed model loaded cleanup storage operation
+
 ## 1.14.0
 
 ### Minor Changes
