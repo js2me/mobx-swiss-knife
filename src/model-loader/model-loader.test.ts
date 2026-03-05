@@ -1,3 +1,4 @@
+import { makeObservable, observable, reaction } from 'mobx';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { sleep } from 'yummies/async';
 import type { AnyObject } from 'yummies/types';
@@ -157,6 +158,61 @@ describe('ModelLoader', () => {
 
       expect(result).toBeNull();
       expect(mockFn).toHaveBeenCalled();
+    });
+
+    it('should load model when property is initialized', async () => {
+      const mockData = { id: 1 };
+      const mockFn = vi.fn().mockResolvedValue(mockData);
+
+      class VM {
+        ml = createModelLoader({ context: this });
+        foo = this.ml.connect({ property: 'foo', fn: mockFn });
+      }
+
+      const vm = new VM();
+
+      expect(vm.foo).toBeNull();
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      await Promise.resolve();
+
+      expect(vm.foo).toStrictEqual(mockData);
+      expect(vm.ml.get('foo')).toStrictEqual(mockData);
+    });
+
+    it('should update foo reactively via reaction', async () => {
+      const mockData = { id: 3 };
+      const mockFn = vi
+        .fn<() => Promise<typeof mockData>>()
+        .mockResolvedValue(mockData);
+
+      class VM {
+        ml = createModelLoader({ context: this });
+        foo = this.ml.connect({ property: 'foo', fn: mockFn });
+
+        constructor() {
+          makeObservable(this, {
+            foo: observable,
+          });
+        }
+      }
+
+      const vm = new VM();
+      const values: Array<{ id: number } | null> = [];
+
+      const dispose = reaction(
+        () => vm.foo,
+        (value) => {
+          values.push(value);
+        },
+        { fireImmediately: true },
+      );
+
+      await Promise.resolve();
+
+      dispose();
+
+      expect(values).toStrictEqual([null, mockData]);
     });
   });
 

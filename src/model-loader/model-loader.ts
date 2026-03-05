@@ -1,6 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { action, computed, makeObservable, observable } from 'mobx';
-import type { AnyObject, Maybe } from 'yummies/types';
+import { action, computed, observable } from 'mobx';
+import { applyObservable } from 'yummies/mobx';
+import type { AnyObject, AnyString, Maybe } from 'yummies/types';
 
 import type {
   ModelLoadedState,
@@ -21,14 +22,10 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     this.abortController = new LinkedAbortController(options.abortSignal);
     this.ctx = options.context;
 
-    computed.struct(this, 'hasLoadingModels');
-    computed.struct(this, 'hasErroredModels');
-
-    action(this, 'load');
-    action(this, 'handleLoadModelSucceed');
-    action(this, 'handleLoadModelFailed');
-
-    makeObservable(this);
+    applyObservable(this, [
+      [computed, 'hasLoadingModels', 'hasErroredModels'],
+      [action, 'load', 'handleLoadModelSucceed', 'handleLoadModelFailed'],
+    ]);
   }
 
   protected get storage(): Map<any, ModelLoadedState> {
@@ -73,11 +70,11 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
    * Connects a model loader to a property of the context.
    * This method will automatically load the model when the property is accessed.
    */
-  connect<TProperty extends keyof TContext, TModel>({
+  connect<TModel>({
     property,
     fn,
   }: {
-    property: TProperty;
+    property: keyof TContext | AnyString;
     fn: () => Promise<TModel>;
   }): TModel | null;
 
@@ -90,18 +87,6 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     fn,
   }: {
     property: string;
-    fn: () => Promise<TModel>;
-  }): TModel | null;
-
-  /**
-   * Connects a model loader to a property of the context.
-   * This method will automatically load the model when the property is accessed.
-   */
-  connect<TProperty extends keyof TContext, TModel>({
-    property,
-    fn,
-  }: {
-    property: TProperty;
     fn: () => Promise<TModel>;
   }): TModel | null {
     // biome-ignore lint/nursery/noFloatingPromises: this is special trick
