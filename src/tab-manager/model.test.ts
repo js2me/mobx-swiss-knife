@@ -44,7 +44,7 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // @ts-ignore
+      // @ts-expect-error
       const tabIndexesMap = tabManager.tabIndexesMap;
 
       expect(tabManager.tabs).toEqual([]);
@@ -63,7 +63,7 @@ describe('TabManager', () => {
 
       const tabManager = new TabManager(config);
 
-      // @ts-ignore
+      // @ts-expect-error
       const tabIndexesMap = tabManager.tabIndexesMap;
 
       expect(tabManager.tabs).toEqual(tabs);

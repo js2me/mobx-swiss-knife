@@ -62,7 +62,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       const storage = loader.storage;
 
       expect(storage).toBeDefined();
@@ -74,9 +74,9 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       const storage1 = loader.storage;
-      // @ts-ignore
+      // @ts-expect-error
       const storage2 = loader.storage;
 
       expect(storage1).toBe(storage2);
@@ -223,7 +223,7 @@ describe('ModelLoader', () => {
       const loader = new ModelLoader(options);
 
       const mockData = { name: 'test' };
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'get').mockReturnValue({
         data: mockData,
         fn: () => Promise.resolve(true),
@@ -240,7 +240,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'get').mockReturnValue(undefined);
 
       const result = loader.get('testProp');
@@ -256,7 +256,7 @@ describe('ModelLoader', () => {
       const loader = new ModelLoader(options);
 
       const mockError = new Error('Load error');
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'get').mockReturnValue({
         error: mockError,
         fn: () => Promise.resolve(true),
@@ -273,7 +273,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'get').mockReturnValue({
         fn: () => Promise.resolve(true),
         key: '',
@@ -312,7 +312,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'get').mockReturnValue({
         data: null,
         fn: () => Promise.resolve(true),
@@ -331,7 +331,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: null },
       ] as any);
@@ -346,7 +346,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: { name: 'test' } },
       ] as any);
@@ -363,7 +363,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'values').mockReturnValue([
         { error: new Error('Test error') },
       ] as any);
@@ -378,7 +378,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       vi.spyOn(loader.storage, 'values').mockReturnValue([
         { data: { name: 'test' } },
       ] as any);
@@ -395,7 +395,7 @@ describe('ModelLoader', () => {
       const options: ModelLoaderOptions<any> = { context };
       const loader = new ModelLoader(options);
 
-      // @ts-ignore
+      // @ts-expect-error
       const abortSpy = vi.spyOn(loader.abortController, 'abort');
 
       loader.destroy();
@@ -425,7 +425,7 @@ describe('ModelLoader', () => {
 
       expect(loader.isLoading('testKey')).toBe(false);
 
-      // @ts-ignore
+      // @ts-expect-error
       const abortSpy = vi.spyOn(loader.abortController, 'abort');
       loader.destroy();
       expect(abortSpy).toHaveBeenCalled();

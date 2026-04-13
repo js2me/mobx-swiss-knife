@@ -84,7 +84,7 @@ describe('DatesComparator', () => {
       const comparator = new DatesComparator();
       comparator.dates = null;
 
-      // @ts-ignore
+      // @ts-expect-error
       const result = comparator.getDatesComparison();
 
       expect(result.hours).toBe(0);
@@ -99,7 +99,7 @@ describe('DatesComparator', () => {
 
       comparator.dates = [startDate, endDate];
 
-      // @ts-ignore
+      // @ts-expect-error
       const result = comparator.getDatesComparison();
 
       expect(result.hours).toBeGreaterThanOrEqual(0);
@@ -115,7 +115,7 @@ describe('DatesComparator', () => {
       const endDate = new Date(startDate.getTime() + 3_600_000);
 
       comparator.dates = [startDate, endDate];
-      // @ts-ignore
+      // @ts-expect-error
       comparator.compareDates();
 
       expect(comparator.hours).toBeGreaterThanOrEqual(0);
@@ -132,7 +132,7 @@ describe('DatesComparator', () => {
 
       const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 
-      // @ts-ignore
+      // @ts-expect-error
       comparator.compareDates();
 
       expect(clearTimeoutSpy).toHaveBeenCalledTimes(0);
@@ -216,18 +216,18 @@ describe('DatesComparator', () => {
     it('should return true for string dates', () => {
       const comparator = new DatesComparator();
 
-      // @ts-ignore
+      // @ts-expect-error
       expect(comparator.isDateDynamic('now')).toBe(true);
-      // @ts-ignore
+      // @ts-expect-error
       expect(comparator.isDateDynamic('now')).toBe(true);
     });
 
     it('should return false for non-string dates', () => {
       const comparator = new DatesComparator();
 
-      // @ts-ignore
+      // @ts-expect-error
       expect(comparator.isDateDynamic(new Date())).toBe(false);
-      // @ts-ignore
+      // @ts-expect-error
       expect(comparator.isDateDynamic(1_234_567_890)).toBe(false);
     });
   });
@@ -235,7 +235,7 @@ describe('DatesComparator', () => {
   describe('resolveDate method', () => {
     it('should resolve "now" to current date', () => {
       const comparator = new DatesComparator();
-      // @ts-ignore
+      // @ts-expect-error
       const result = comparator.resolveDate('now');
 
       expect(result).toBeInstanceOf(Date);
@@ -245,7 +245,7 @@ describe('DatesComparator', () => {
     it('should resolve number to date', () => {
       const comparator = new DatesComparator();
       const timestamp = Date.now();
-      // @ts-ignore
+      // @ts-expect-error
       const result = comparator.resolveDate(timestamp);
 
       expect(result).toBeInstanceOf(Date);
@@ -255,7 +255,7 @@ describe('DatesComparator', () => {
     it('should return date as-is', () => {
       const comparator = new DatesComparator();
       const date = new Date();
-      // @ts-ignore
+      // @ts-expect-error
       const result = comparator.resolveDate(date);
 
       expect(result).toBe(date);

@@ -177,7 +177,7 @@ describe('Paginator', () => {
       pageSizes: defaultPageSizes,
     });
 
-    // @ts-ignore
+    // @ts-expect-error
     const innerAbortController = paginator.abortController;
 
     const abortSpy = vi.spyOn(innerAbortController, 'abort');
@@ -192,7 +192,7 @@ describe('Paginator', () => {
       abortSignal: abortController.signal,
     });
 
-    // @ts-ignore
+    // @ts-expect-error
     const innerAbortController = paginator.abortController;
 
     expect(innerAbortController.signal).toStrictEqual(abortController.signal);

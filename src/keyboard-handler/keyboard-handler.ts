@@ -142,9 +142,11 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
             }
             node.addEventListener('focus', this.activate, {
               signal: nodeAbortController.signal,
+              ...this.config.listenerOpts?.focus,
             });
             node.addEventListener('blur', this.deactivate, {
               signal: nodeAbortController.signal,
+              ...this.config.listenerOpts?.blur,
             });
           } else {
             nodeAbortController.abort();
@@ -159,14 +161,17 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
 
     globalThis.addEventListener('keydown', this.handleKeyboardClick, {
       signal: this.abortController.signal,
+      ...this.config.listenerOpts?.keydown,
     });
 
     if (config.activateStrategy?.type === 'keyclick') {
       globalThis.addEventListener('click', this.activate, {
         signal: this.abortController.signal,
+        ...this.config.listenerOpts?.click,
       });
       globalThis.addEventListener('mousemove', this.activate, {
         signal: this.abortController.signal,
+        ...this.config.listenerOpts?.mousemove,
       });
     }
   }

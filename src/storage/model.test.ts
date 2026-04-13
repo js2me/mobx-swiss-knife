@@ -281,7 +281,7 @@ describe('Storage', () => {
 
   describe('destroy', () => {
     it('should abort the abort controller', () => {
-      // @ts-ignore
+      // @ts-expect-error
       const abortSpy = vi.spyOn(storage.abortController, 'abort');
 
       storage.destroy();

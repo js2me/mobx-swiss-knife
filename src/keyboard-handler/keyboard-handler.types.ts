@@ -57,5 +57,13 @@ export interface KeyboardHandlerConfig<Action extends KeyboardHandlerAction> {
   abortSignal?: AbortSignal;
   activateStrategy?: KeyboardHandlerActivationStrategy;
 
+  listenerOpts?: {
+    keydown?: AddEventListenerOptions;
+    click?: AddEventListenerOptions;
+    mousemove?: AddEventListenerOptions;
+    blur?: AddEventListenerOptions;
+    focus?: AddEventListenerOptions;
+  };
+
   actions: MaybeFn<Action[]>;
 }

@@ -170,7 +170,7 @@ describe('Ticker', () => {
 
       ticker.start();
 
-      // @ts-ignore
+      // @ts-expect-error
       const abortSpy = vi.spyOn(ticker.abortController, 'abort');
 
       ticker.destroy();
@@ -495,7 +495,7 @@ describe('Ticker', () => {
 
       ticker.start();
 
-      // @ts-ignore
+      // @ts-expect-error
       const abortSpy = vi.spyOn(ticker.abortController, 'abort');
 
       ticker.destroy();
