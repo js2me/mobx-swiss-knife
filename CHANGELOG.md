@@ -1,5 +1,15 @@
 # mobx-swiss-knife
 
+## 1.15.0
+
+### Minor Changes
+
+- [`41fd48e`](https://github.com/js2me/mobx-swiss-knife/commit/41fd48ed5210cf4604734af3fa6e8cad5d450276) Thanks [@js2me](https://github.com/js2me)! - better documentation for tools
+
+### Patch Changes
+
+- [`4d89fed`](https://github.com/js2me/mobx-swiss-knife/commit/4d89fed5c513887fb1c55c33c55e56a5737e5e96) Thanks [@js2me](https://github.com/js2me)! - update all deps to latest (refresh)
+
 ## 1.14.2
 
 ### Patch Changes
