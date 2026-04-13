@@ -14,6 +14,28 @@ Helps lazily load models, services, and other data only when they are needed. It
 - Bind the loading result to a property of the current object.
 - Provide access to loaded data and loading state.
 
+## Constructor parameters
+
+- `context` — Object that will receive loaded values by key.
+- `abortSignal` — Cancels the internal loading lifecycle.
+- `throwOnError` — Re-throws loading errors instead of only storing them.
+- `onLoadFailed` — Called when loading fails.
+- `onLoadSucceed` — Called when loading succeeds.
+
+## Public properties
+
+- `hasLoadingModels` — Shows whether at least one model is still loading.
+- `hasErroredModels` — Shows whether at least one model has failed.
+
+## Public methods
+
+- `load(key, fn)` — Loads a value by key and stores it in the context object.
+- `connect({ property, fn })` — Starts loading and writes the result into the given property.
+- `get(key)` — Returns the loaded value for a key.
+- `getError(key)` — Returns the loading error for a key.
+- `isLoading(key)` — Shows whether a specific key is still loading.
+- `destroy()` — Stops the loader and clears its internal state.
+
 ## Usage example
 
 ```ts

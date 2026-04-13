@@ -14,6 +14,27 @@ Helps manage tabs in the UI by storing the list of tabs, the active tab, and the
 - Return the data of the active tab.
 - Work with either internal or external active-tab state.
 
+## Constructor parameters
+
+- `tabs` — Tab list or a function that returns the current list of tabs.
+- `fallbackTab` — Tab id used when no active tab can be resolved.
+- `getActiveTab` — External source of the current active tab id.
+- `onChangeActiveTab` — Called when the active tab changes.
+
+## Public properties
+
+- `tabs` — Current resolved list of tabs.
+- `activeTab` — Id of the active tab.
+- `tabsCount` — Total number of tabs.
+- `activeTabData` — Data of the active tab.
+
+## Public methods
+
+- `setTabs(tabs)` — Replaces the current list of tabs for this instance.
+- `getTabData(tabId)` — Returns data for a tab by id.
+- `setActiveTab(tabId)` — Changes the active tab.
+- `destroy()` — Deprecated no-op method kept for compatibility.
+
 ## Usage example
 
 ```ts

@@ -14,6 +14,24 @@ Creates regular ticks with a given interval and lets MobX react to them. It is u
 - Store the number of elapsed ticks.
 - Change the update interval.
 
+## Constructor parameters
+
+- `ticksPer` — Time between ticks in milliseconds.
+- `abortSignal` — Stops internal reactions when the related lifecycle is aborted.
+
+## Public properties
+
+- `ticks` — Number of ticks since the last reset.
+- `ticksPer` — Current tick interval in milliseconds.
+- `isRunning` — Shows whether the ticker is currently active.
+
+## Public methods
+
+- `start()` — Starts ticking from zero.
+- `stop()` — Stops ticking.
+- `reset()` — Stops ticking and resets the counter.
+- `destroy()` — Fully cleans up the ticker.
+
 ## Usage example
 
 ```ts

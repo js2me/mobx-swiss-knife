@@ -14,6 +14,21 @@ Simplifies working with delayed actions when a function should not run immediate
 - Work in debounce and throttle modes.
 - Clear a single timer or all timers at once.
 
+## Constructor parameters
+
+- `abortSignal` — Cancels all active timers when the related lifecycle is aborted.
+
+## Public properties
+
+- `isEmpty` — Shows whether there are no active timers left.
+
+## Public methods
+
+- `throttled(fn, scheduleConfig?)` — Runs a callback with throttle behavior.
+- `debounced(fn, scheduleConfig?)` — Runs a callback with debounce behavior.
+- `destroyTimer(id)` — Removes a specific timer by id.
+- `clean()` — Clears all active timers at once.
+
 ## Usage example
 
 ```ts

@@ -14,6 +14,22 @@ Turns the current time into a reactive value. It is useful for clocks, "updated 
 - Refresh the value with a given interval.
 - Return either the raw date or the result of your custom mapping.
 
+## Constructor parameters
+
+- `updatePer` — Update interval in milliseconds, or a function that returns it.
+- `map` — Function that maps the current `Date` into a custom value.
+- `abortSignal` — Stops internal reactions and timers when destroyed.
+
+## Public properties
+
+- `ms` — Current timestamp in milliseconds.
+- `date` — Current `Date` object.
+- `value` — Current mapped value, or the raw date when no mapping is provided.
+
+## Public methods
+
+- `destroy()` — Stops updates and cleans up the instance.
+
 ## Usage example
 
 ```ts

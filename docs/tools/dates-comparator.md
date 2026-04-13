@@ -14,6 +14,29 @@ Helps compare two dates and get the difference between them in a UI-friendly for
 - The total duration in a larger aggregated format.
 - A flag showing that no comparison is currently set.
 
+## Constructor parameters
+
+- `dates` — Initial pair of dates to compare.
+- `checkTime` — Update interval in milliseconds when one of the dates is dynamic, such as `"now"`.
+- `getComparison` — Custom comparison logic if you want to override the default time difference behavior.
+- `abortSignal` — Clears the state when the related lifecycle is aborted.
+
+## Public properties
+
+- `dates` — Current pair of dates or `null`.
+- `hours` — Current difference in hours.
+- `minutes` — Current difference in minutes.
+- `seconds` — Current difference in seconds.
+- `isEmpty` — Shows whether there is no active comparison.
+- `totalHours` — Total difference expressed in hours.
+- `totalMinutes` — Total difference expressed in minutes.
+- `totalSeconds` — Total difference expressed in seconds.
+
+## Public methods
+
+- `setDates(dates)` — Sets a new pair of dates and recalculates the difference.
+- `reset()` — Clears the current comparison state.
+
 ## Usage example
 
 ```ts

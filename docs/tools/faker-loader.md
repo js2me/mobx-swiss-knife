@@ -14,6 +14,22 @@ Loads `faker` only when it is actually needed. This is useful for demo data, moc
 - Loading state and error state if something goes wrong.
 - Access to the ready-to-use instance after a successful load.
 
+## Constructor parameters
+
+- `defaultLocale` — Initial locale that will be used for loading `faker`.
+- `abortSignal` — Stops the internal loading flow when the related lifecycle is aborted.
+
+## Public properties
+
+- `instance` — The currently loaded `faker` instance for the active locale.
+- `isLoading` — Shows whether the current locale is still loading.
+- `error` — Returns the last loading error for the current locale.
+
+## Public methods
+
+- `load(locale?)` — Loads `faker` for the provided locale or for the current default locale.
+- `destroy()` — Cleans up the internal loader.
+
 ## Usage example
 
 ```ts

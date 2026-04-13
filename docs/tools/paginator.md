@@ -14,6 +14,35 @@ Manages pagination in the UI by storing the current page, page size, and helping
 - Change the page size.
 - Keep the current pagination state in one place.
 
+## Constructor parameters
+
+- `pageSizes` — List of available page sizes.
+- `page` — Initial page number.
+- `pageSize` — Initial page size.
+- `pagesCount` — Total number of pages.
+- `abortSignal` — Stops internal sync reactions when the related lifecycle is aborted.
+
+## Public properties
+
+- `pageSizes` — Current list of available page sizes.
+- `inputData` — Current page and page size.
+- `data` — Current page, page size, and total pages.
+
+## Public methods
+
+- `toPreviousPage()` — Moves to the previous page.
+- `toNextPage()` — Moves to the next page.
+- `toPage(page)` — Moves to a specific page.
+- `setPageSize(pageSize)` — Changes the page size and resets to page one.
+- `setPagesCount(pagesCount)` — Updates the total number of pages.
+- `setPageSizes(pageSizes)` — Replaces the list of page sizes.
+- `reset()` — Resets the current page to the first page.
+- `syncWith(getParametersFunction)` — Synchronizes paginator state with an external source.
+- `createFromOffsetData(data)` — Builds page-based pagination data from offset-based values.
+- `createOffsetData(data)` — Converts page-based pagination data into offset-based values.
+- `toOffsetData()` — Converts the current paginator state into offset-based values.
+- `destroy()` — Stops internal reactions.
+
 ## Usage example
 
 ```ts
