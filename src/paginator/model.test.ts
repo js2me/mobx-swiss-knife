@@ -195,6 +195,10 @@ describe('Paginator', () => {
     // @ts-expect-error
     const innerAbortController = paginator.abortController;
 
-    expect(innerAbortController.signal).toStrictEqual(abortController.signal);
+    expect(innerAbortController.signal.aborted).toBe(false);
+
+    abortController.abort();
+
+    expect(innerAbortController.signal.aborted).toBe(true);
   });
 });
