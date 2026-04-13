@@ -1,29 +1,41 @@
-# `Time`  
+# `Time`
 
-Tool for working with `Date` as reactive value   
+Turns the current time into a reactive value. It is useful for clocks, "updated just now" indicators, relative time displays, and any UI that should refresh itself based on time.
 
-## Usage   
+## When to use
+
+- When you need the current time as a reactive value.
+- When the UI should refresh at a specific interval.
+- When you want not only the raw date, but also a mapped value derived from it.
+
+## What it can do
+
+- Provide the current date and time in milliseconds.
+- Refresh the value with a given interval.
+- Return either the raw date or the result of your custom mapping.
+
+## Usage example
 
 ```ts
-import { Time, createTime } from "mobx-swiss-knife";
+import { createTime } from "mobx-swiss-knife";
 
-const time = new Time({
-  updatePer: 1000, // default 1000
+const time = createTime({
+  updatePer: 1000,
 });
-const time = createTime();
 
-time.date;
-time.ms;
-time.value;
+console.log(time.date);
+console.log(time.ms);
+console.log(time.value);
 ```
 
-Example with mapping value:   
+## Example with a mapped value
 
 ```ts
+import { createTime } from "mobx-swiss-knife";
 
-const time = new Time({
-  map: date => date.getSeconds(),
+const seconds = createTime({
+  map: (date) => date.getSeconds(),
 });
 
-time.value; // seconds
+console.log(seconds.value);
 ```

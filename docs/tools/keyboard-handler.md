@@ -1,60 +1,51 @@
-# `KeyboardHandler`   
+# `KeyboardHandler`
 
-Tool for working with keyboard events   
+Helps define keyboard shortcuts and bind them to application actions. It works well for interfaces with keyboard-driven interactions such as panels, lists, tables, modals, and internal tools.
 
-## Usage   
+## When to use
+
+- When you need to add clear keyboard shortcuts for user actions.
+- When some commands should be enabled or disabled depending on the current screen state.
+- When you want to manage keyboard actions in one place and properly clean them up on unmount.
+
+## What it can do
+
+- Trigger actions by keyboard shortcuts.
+- Store the current list of actions and replace it with a new one.
+- Work only in an active mode when that matters for a specific screen.
+
+## Usage example
 
 ```ts
-import { KeyboardHandler, createKeyboardHandler } from "mobx-swiss-knife";
+import { createKeyboardHandler } from "mobx-swiss-knife";
 
-const keyboardHandler = new KeyboardHandler({
-  abortSignal: this.unmountSignal,
+const keyboard = createKeyboardHandler({
   actions: [
     {
-      shortcuts: ['Ctrl+Shift+F12'],
+      shortcuts: ["Ctrl+S"],
       action: () => {
-        this.handleToggleOpen();
+        console.log("Save");
       },
     },
     {
-      shortcuts: ['Ctrl+ArrowLeft'],
+      shortcuts: ["Escape"],
       action: () => {
-        if (this.expandedByDefault.allProperties) {
-          this.expandedByDefault.allProperties = false;
-        } else {
-          this.expandedByDefault.allVms = false;
-        }
-      },
-    },
-    {
-      shortcuts: ['Ctrl+ArrowRight'],
-      action: () => {
-        if (this.expandedByDefault.allVms) {
-          this.expandedByDefault.allProperties = true;
-        } else {
-          this.expandedByDefault.allVms = true;
-        }
-      },
-    },
-    {
-      shortcuts: ['Ctrl+ArrowDown'],
-      action: () => {
-        requestAnimationFrame(() => {
-          this.containerRef.current!.scrollTop += 200;
-        });
-      },
-    },
-    {
-      shortcuts: ['Ctrl+ArrowUp'],
-      disabled: true,
-      action: () => {
-        requestAnimationFrame(() => {
-          this.containerRef.current!.scrollTop -= 200;
-        });
+        console.log("Close");
       },
     },
   ],
 });
-const keyboardHandler = createKeyboardHandler()
 
+keyboard.activate();
+
+keyboard.setActions([
+  {
+    shortcuts: ["Enter"],
+    action: () => {
+      console.log("Confirm");
+    },
+  },
+]);
+
+keyboard.destroy();
 ```

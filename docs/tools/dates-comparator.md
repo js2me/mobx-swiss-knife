@@ -1,21 +1,33 @@
-# `DatesComparator`  
+# `DatesComparator`
 
-Tool for comparing two dates, allows you to dynamically get the difference between two dynamic dates   
+Helps compare two dates and get the difference between them in a UI-friendly format. It is useful for timers, countdowns, and any scenario where you need to show how much time is left until an event.
 
-## Usage   
+## When to use
+
+- When you need to show a countdown to a date or time.
+- When you need to quickly refresh the visible difference between "now" and a target date.
+- When you want to replace the current dates or reset the state completely.
+
+## What it provides
+
+- The difference in hours, minutes, and seconds.
+- The total duration in a larger aggregated format.
+- A flag showing that no comparison is currently set.
+
+## Usage example
 
 ```ts
-import { DatesComparator, createDatesComparator } from "mobx-swiss-knife";
-import { reaction } from "mobx";
+import { createDatesComparator } from "mobx-swiss-knife";
 
-const dc = new DatesComparator();
-const dc = createDatesComparator();
+const saleTimer = createDatesComparator({
+  dates: ["now", new Date("2026-12-31T23:59:59.000Z")],
+});
 
-dc.setDates(['now', new Date('2025-07-28T07:53:30.285Z')]);
-dc.totalHours; //
-dc.minutes; //
+console.log(saleTimer.hours, saleTimer.minutes, saleTimer.seconds);
 
-reaction(() => dc.totalHours, (totalHours) => {
-  console.log('total hours', totalHours);
-})
+saleTimer.setDates(["now", new Date("2027-01-01T12:00:00.000Z")]);
+
+console.log(saleTimer.totalHours);
+
+saleTimer.reset();
 ```

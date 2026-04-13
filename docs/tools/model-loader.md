@@ -1,41 +1,45 @@
-# `ModelLoader`  
+# `ModelLoader`
 
-Tool for lazy load various models or modules.   
+Helps lazily load models, services, and other data only when they are needed. It is especially useful when part of the functionality is not required immediately, but only after opening a specific block, tab, or screen.
 
-## Usage   
+## When to use
+
+- When a model should be created only on first access.
+- When you want to store the loaded result inside the current object and reuse it later.
+- When you need a central place to understand whether something is loading or has failed.
+
+## What it can do
+
+- Load data by key.
+- Bind the loading result to a property of the current object.
+- Provide access to loaded data and loading state.
+
+## Usage example
 
 ```ts
-import { ModelLoader, createModelLoader } from "mobx-swiss-knife";
-import { reaction } from "mobx";
+import { createModelLoader } from "mobx-swiss-knife";
 
-class YourVM {
-  private modelLoader = new ModelLoader({ context: this });
-  private modelLoader = createModelLoader({ context: this });
+class ProfilePage {
+  loader = createModelLoader({ context: this });
 
-  applesModel = this.modelLoader.connect({
-    property: 'applesModel',
-    fn: () =>
-      import('@/entities/apples/model')
-        .then(m => {
-          const ApplesModel = m.ApplesModel
-          return new ApplesModel();
-        })
+  profile = this.loader.connect({
+    property: "profile",
+    fn: async () => {
+      return {
+        name: "Anna",
+        role: "admin",
+      };
+    },
   });
 
-  async getMeme() {
-    const memesModel = this.modelLoader.load('memes', async () => {
-      const { MemesModel } = await import('@/entities/memes/model');
-      return new MemesModel();
-    })
+  async loadSettings() {
+    await this.loader.load("settings", async () => {
+      return {
+        language: "ru",
+      };
+    });
 
-    const meme = await memesModel.loadSomeMeme();
-
-    return meme;
-  }
-
-  @computed.struct
-  get isLoading() {
-    return this.modelLoader.hasLoadingModels();
+    return this.loader.get("settings");
   }
 }
 ```

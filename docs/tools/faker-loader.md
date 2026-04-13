@@ -1,20 +1,32 @@
-# `FakerLoader`  
+# `FakerLoader`
 
-Tool for lazy loading `faker`
+Loads `faker` only when it is actually needed. This is useful for demo data, mocks, and development screens where you do not want to load the data generator in advance.
 
-## Usage   
+## When to use
+
+- When you need to generate test or demo data on demand.
+- When you want to delay loading `faker` until the first real use.
+- When you need to switch the generator locale for a specific scenario.
+
+## What it provides
+
+- Controlled loading of a `faker` instance.
+- Loading state and error state if something goes wrong.
+- Access to the ready-to-use instance after a successful load.
+
+## Usage example
 
 ```ts
-import { FakerLoader, createFakerLoader } from "mobx-swiss-knife";
-import { reaction } from "mobx";
+import { createFakerLoader } from "mobx-swiss-knife";
 
-const faker = new FakerLoader();
-const faker = createFakerLoader();
+const fakerLoader = createFakerLoader({
+  defaultLocale: "en",
+});
 
-await faker.load();
+await fakerLoader.load();
 
-reaction(() => faker.isLoading, noop);
-reaction(() => faker.error, noop);
+const city = fakerLoader.instance.location.city();
+const email = fakerLoader.instance.internet.email();
 
-faker.instance; // Faker otherwise throw exception
+console.log(city, email);
 ```

@@ -1,39 +1,5 @@
-# `Storage`  
+# `Storage`
 
-Tool for `LocalStorage`/`SessionStorage` usage.  
+This tool has been moved to `mobx-web-api`.
 
-## Usage  
-
-```ts
-import { Storage, createStorage } from "mobx-swiss-knife";
-import { reaction } from "mobx";
-
-const s = new Storage();
-const s = createStorage();
-
-s.set({
-  key: 'foo',
-  value: 1,
-});
-
-s.get<number>({
-  key: 'foo',
-});
-
-
-class MyVM {
-  private s: Storage;
-  
-  foo: number = 1;
-  
-  constructor() {
-    this.s = new Storage();
-
-    s.syncProperty(this, 'foo', {
-      key: 'local-storage-key',
-      fallback: 1,
-      type: 'local',
-    })
-  }
-}
-```
+[Please use the implementation and documentation from `mobx-web-api`](https://js2me.github.io/mobx-web-api/apis/storage-data) instead of `mobx-swiss-knife`.
