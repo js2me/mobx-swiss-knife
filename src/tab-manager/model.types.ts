@@ -28,7 +28,8 @@ export interface TabManagerConfig<
    * using `setActiveTab` method
    */
   onChangeActiveTab?: (
-    nextActiveTab: NoInfer<TItem>['id'],
-    currentActiveTabData: TItem,
+    nextActiveTabId: NoInfer<TItem>['id'],
+    activeTabData: TItem,
+    prevActiveTabData: TItem,
   ) => void;
 }

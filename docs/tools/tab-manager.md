@@ -19,7 +19,7 @@ Helps manage tabs in the UI by storing the list of tabs, the active tab, and the
 - `tabs` — Tab list or a function that returns the current list of tabs.
 - `fallbackTab` — Tab id used when no active tab can be resolved.
 - `getActiveTab` — External source of the current active tab id.
-- `onChangeActiveTab` — Called when the active tab changes.
+- `onChangeActiveTab(nextActiveTabId, activeTabData, prevActiveTabData)` — Called when the active tab changes. Receives the id and data of the new tab, and the data of the previously active tab.
 
 ## Public properties
 
