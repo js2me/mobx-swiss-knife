@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.15.1
+
+### Patch Changes
+
+- [`904cb14`](https://github.com/js2me/mobx-swiss-knife/commit/904cb14f90f8b25f2ecd8cd5454dc16936278d68) Thanks [@js2me](https://github.com/js2me)! - Fix `onChangeActiveTab` callback: now passes `activeTabData` (new tab data) as second argument and `prevActiveTabData` (previous tab data) as third argument, instead of duplicating the new tab data in both parameters
+
 ## 1.15.0
 
 ### Minor Changes
