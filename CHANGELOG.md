@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.15.2
+
+### Patch Changes
+
+- [`4fa48be`](https://github.com/js2me/mobx-swiss-knife/commit/4fa48be834e09776ffef5fb35f565a63965b5d54) Thanks [@js2me](https://github.com/js2me)! - migration npm publish to trusted gh actions
+
 ## 1.15.1
 
 ### Patch Changes
