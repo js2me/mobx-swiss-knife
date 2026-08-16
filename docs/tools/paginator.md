@@ -1,49 +1,8 @@
 # `Paginator`
 
-Manages pagination in the UI by storing the current page, page size, and helping move between pages. It is useful for tables, lists, catalogs, and any screen where data is displayed in chunks.
+`Paginator` keeps pagination state separate from the request and UI. The component uses `data`, while the API can receive `toOffsetData()`, keeping the page-based state separate from the backend's offset/limit format.
 
-## When to use
-
-- When you need to browse data page by page.
-- When the user should be able to choose the page size.
-- When you want to pass pagination parameters into data loading in a convenient way.
-
-## What it can do
-
-- Move to the next page, previous page, or a specific page.
-- Change the page size.
-- Keep the current pagination state in one place.
-
-## Constructor parameters
-
-- `pageSizes` — List of available page sizes.
-- `page` — Initial page number.
-- `pageSize` — Initial page size.
-- `pagesCount` — Total number of pages.
-- `abortSignal` — Stops internal sync reactions when the related lifecycle is aborted.
-
-## Public properties
-
-- `pageSizes` — Current list of available page sizes.
-- `inputData` — Current page and page size.
-- `data` — Current page, page size, and total pages.
-
-## Public methods
-
-- `toPreviousPage()` — Moves to the previous page.
-- `toNextPage()` — Moves to the next page.
-- `toPage(page)` — Moves to a specific page.
-- `setPageSize(pageSize)` — Changes the page size and resets to page one.
-- `setPagesCount(pagesCount)` — Updates the total number of pages.
-- `setPageSizes(pageSizes)` — Replaces the list of page sizes.
-- `reset()` — Resets the current page to the first page.
-- `syncWith(getParametersFunction)` — Synchronizes paginator state with an external source.
-- `createFromOffsetData(data)` — Builds page-based pagination data from offset-based values.
-- `createOffsetData(data)` — Converts page-based pagination data into offset-based values.
-- `toOffsetData()` — Converts the current paginator state into offset-based values.
-- `destroy()` — Stops internal reactions.
-
-## Usage example
+## Example: Table with an Offset API
 
 ```ts
 import { createPaginator } from "mobx-swiss-knife";
@@ -55,12 +14,46 @@ const paginator = createPaginator({
   pageSizes: [10, 20, 50],
 });
 
-paginator.toNextPage();
-paginator.toPage(4);
-paginator.setPageSize(20);
+async function loadUsers() {
+  const response = await fetch(
+    `/api/users?${new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(paginator.toOffsetData()).map(([key, value]) => [
+          key,
+          String(value),
+        ]),
+      ),
+    )}`,
+  );
+  return response.json();
+}
 
-console.log(paginator.data);
-console.log(paginator.toOffsetData());
+await loadUsers();
+
+paginator.toNextPage();
+paginator.setPageSize(20); // page automatically returns to 1
+console.log(paginator.inputData); // { page: 1, pageSize: 20 }
 
 paginator.reset();
 ```
+
+## Properties
+
+- `pageSizes` — available page sizes; replace the array with `setPageSizes`.
+- `inputData` — `{ page, pageSize }`, usually sent in the client request.
+- `data` — `{ page, pageSize, pagesCount }`, used to render pagination.
+
+The page is clamped to the `1..pagesCount` range: `toPage(0)` goes to the first page, while an oversized page goes to the last.
+
+## Methods
+
+- `toPreviousPage()`, `toNextPage()`, `toPage(page)` — navigation.
+- `setPageSize(pageSize)` — change the size and reset the page to 1.
+- `setPagesCount(pagesCount)` — update the page count after an API response.
+- `setPageSizes(pageSizes)` — update the available sizes.
+- `reset()` — go to the first page.
+- `syncWith(getParameters)` — read `{ page, pageSize, pagesCount }` from external MobX state; the callback runs immediately and on changes.
+- `createFromOffsetData({ offset, limit, count })` — get page-based data from an API response.
+- `createOffsetData(data)` — convert the provided page-based object to `{ offset, limit, count }`.
+- `toOffsetData()` — convert the current state.
+- `destroy()` — disable the reaction created by `syncWith`.

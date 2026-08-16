@@ -1,61 +1,27 @@
 # `Socket`
 
-Simplifies working with `WebSocket` in an application. It is useful for chats, notifications, online statuses, and any scenario where you need to keep a live connection with the server.
+`Socket` is a typed wrapper around WebSocket. Unlike a direct `WebSocket`, `send()` can be called before the connection opens, and messages are sent after `open`. Incoming data is deserialized into `message`.
 
-## When to use
-
-- When you want to open and close the connection from one place.
-- When it is important to track whether the connection is currently open.
-- When you want to safely send messages even during reconnects.
-
-## What it can do
-
-- Open and close the socket.
-- Send messages and expose the latest incoming message.
-- Support reconnect behavior when it is enabled in the configuration.
-
-## Constructor parameters
-
-- `url` — WebSocket URL or a function that returns the URL from the payload passed to `open()`.
-- `defaultCloseCode` — Default close code used by `close()`.
-- `protocols` — WebSocket subprotocols.
-- `abortSignal` — Stops the internal lifecycle when destroyed.
-- `serializeOutputMessage` — Custom serializer for outgoing messages.
-- `deserializeInputMessage` — Custom parser for incoming messages.
-- `reconnect` — Reconnect settings such as enabling, timeout, and skipped close codes.
-
-## Public properties
-
-- `isOpen` — Shows whether the socket is currently open.
-- `message` — Last successfully received message.
-- `isReconnectEnabled` — Shows whether reconnect mode is enabled.
-
-## Public methods
-
-- `open(payload?)` — Opens the socket connection.
-- `send(message)` — Sends a message immediately or queues it until the socket is open.
-- `close(code?)` — Closes the current socket connection.
-- `resendNotSentMessages()` — Sends messages that were queued while the socket was closed.
-- `getSocketUrl(payload)` — Resolves the final URL used by the socket.
-- `destroy()` — Stops the socket lifecycle.
-
-## Usage example
+## Example: Notification Channel
 
 ```ts
 import { createSocket } from "mobx-swiss-knife";
 
-const socket = createSocket({
-  url: "wss://example.com/ws",
+type Notification = { type: 'notification'; text: string };
+type Command = { type: 'subscribe'; channel: string };
+
+const socket = createSocket<void, Notification, Command>({
+  url: 'wss://example.com/ws',
+  deserializeInputMessage: (raw) => JSON.parse(raw) as Notification,
+  serializeOutputMessage: (message) => JSON.stringify(message),
   reconnect: {
     enabled: true,
+    timeout: 2000,
   },
 });
 
 socket.open();
-
-socket.send({
-  type: "ping",
-});
+socket.send({ type: 'subscribe', channel: 'news' });
 
 console.log(socket.isOpen);
 console.log(socket.message);
@@ -63,3 +29,31 @@ console.log(socket.message);
 socket.close();
 socket.destroy();
 ```
+
+A message sent before the actual `OPEN` is placed in the internal queue. `destroy()` ends the lifecycle and cancels reconnect; call it when the owner is removed.
+
+## URL with a Payload
+
+```ts
+const socket = createSocket<{ token: string }, Incoming, Outgoing>({
+  url: ({ token }) => `wss://example.com/ws?token=${token}`,
+});
+
+socket.open({ token: auth.token });
+```
+
+## Properties
+
+- `isOpen` — whether the connection is currently in the `OPEN` state.
+- `message` — the last successfully parsed incoming message or `null`.
+- `isReconnectEnabled` — whether reconnect is enabled.
+
+## Methods and Options
+
+- `open(payload?)` — open the connection; the payload is passed to the `url` function.
+- `send(message)` — send or queue a message.
+- `close(code?)` — close with the specified code; defaults to `1000`.
+- `resendNotSentMessages()` — manually send the accumulated queue.
+- `getSocketUrl(payload)` — get the final URL without opening the connection.
+- `destroy()` — cancel the lifecycle.
+- `reconnect: { enabled, timeout?, skipCodes? }` — reconnect; close codes `1001` and `1005` are skipped by default.

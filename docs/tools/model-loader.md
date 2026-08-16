@@ -1,42 +1,8 @@
 # `ModelLoader`
 
-Helps lazily load models, services, and other data only when they are needed. It is especially useful when part of the functionality is not required immediately, but only after opening a specific block, tab, or screen.
+`ModelLoader` helps load models and services on demand without bloating a ViewModel constructor. It stores results by key, so the same loader can conveniently be used for multiple dependencies.
 
-## When to use
-
-- When a model should be created only on first access.
-- When you want to store the loaded result inside the current object and reuse it later.
-- When you need a central place to understand whether something is loading or has failed.
-
-## What it can do
-
-- Load data by key.
-- Bind the loading result to a property of the current object.
-- Provide access to loaded data and loading state.
-
-## Constructor parameters
-
-- `context` — Object that will receive loaded values by key.
-- `abortSignal` — Cancels the internal loading lifecycle.
-- `throwOnError` — Re-throws loading errors instead of only storing them.
-- `onLoadFailed` — Called when loading fails.
-- `onLoadSucceed` — Called when loading succeeds.
-
-## Public properties
-
-- `hasLoadingModels` — Shows whether at least one model is still loading.
-- `hasErroredModels` — Shows whether at least one model has failed.
-
-## Public methods
-
-- `load(key, fn)` — Loads a value by key and stores it in the context object.
-- `connect({ property, fn })` — Starts loading and writes the result into the given property.
-- `get(key)` — Returns the loaded value for a key.
-- `getError(key)` — Returns the loading error for a key.
-- `isLoading(key)` — Shows whether a specific key is still loading.
-- `destroy()` — Stops the loader and clears its internal state.
-
-## Usage example
+## Example: Load a Page Model
 
 ```ts
 import { createModelLoader } from "mobx-swiss-knife";
@@ -47,22 +13,52 @@ class ProfilePage {
   profile = this.loader.connect({
     property: "profile",
     fn: async () => {
-      return {
-        name: "Anna",
-        role: "admin",
-      };
+      const response = await fetch('/api/profile');
+      return response.json() as Promise<{ name: string; role: string }>;
     },
   });
 
   async loadSettings() {
-    await this.loader.load("settings", async () => {
-      return {
-        language: "ru",
-      };
-    });
+    await this.loader.load('settings', async () =>
+      (await fetch('/api/settings')).json(),
+    );
 
-    return this.loader.get("settings");
+    return this.loader.get('settings');
   }
 }
 ```
 
+`connect()` starts loading immediately and returns `null`; the result later appears in `context[property]`. If you need to manage the Promise manually, use `load(key, fn)`.
+
+## State and Errors
+
+```ts
+const loader = createModelLoader({
+  context: viewModel,
+  throwOnError: false,
+  onLoadFailed: (error, key) => reportError(key, error),
+  onLoadSucceed: (data, key) => cache.set(key, data),
+});
+
+await loader.load('user', () => fetchUser());
+
+loader.isLoading('user');
+loader.get('user');
+loader.getError('user');
+```
+
+With `throwOnError: true`, the error is rethrown by `load`; otherwise it is available through `getError`. `hasLoadingModels` and `hasErroredModels` are useful for a shared page indicator.
+
+## Properties
+
+- `hasLoadingModels` — whether at least one load is active.
+- `hasErroredModels` — whether at least one model has an error.
+
+## Methods and Options
+
+- `load(key, fn)` — run the loader and store the result by key.
+- `connect({ property, fn })` — bind loading to a `context` property.
+- `get(key)`, `getError(key)`, `isLoading(key)` — read the result and state.
+- `destroy()` — stop the loader; it does not remove already loaded data from `context`.
+- `context` — the object whose property `connect` creates or updates.
+- `abortSignal` — bind the loader to its owner's lifecycle.

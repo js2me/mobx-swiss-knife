@@ -1,35 +1,8 @@
 # `Timers`
 
-Simplifies working with delayed actions when a function should not run immediately, but should wait a little or be rate-limited. It is useful for search, autosave, input handling, and other user-driven scenarios.
+`Timers` combines debounce/throttle and keeps them in one managed lifecycle. This is more useful than scattered `setTimeout` calls when a screen needs to cancel all deferred actions with one call.
 
-## When to use
-
-- When you need to delay an action until the user stops typing.
-- When you need to limit how often repeated calls are executed.
-- When you want a central way to clear active timers.
-
-## What it can do
-
-- Run delayed actions.
-- Work in debounce and throttle modes.
-- Clear a single timer or all timers at once.
-
-## Constructor parameters
-
-- `abortSignal` — Cancels all active timers when the related lifecycle is aborted.
-
-## Public properties
-
-- `isEmpty` — Shows whether there are no active timers left.
-
-## Public methods
-
-- `throttled(fn, scheduleConfig?)` — Runs a callback with throttle behavior.
-- `debounced(fn, scheduleConfig?)` — Runs a callback with debounce behavior.
-- `destroyTimer(id)` — Removes a specific timer by id.
-- `clean()` — Clears all active timers at once.
-
-## Usage example
+## Example: Search After an Input Pause
 
 ```ts
 import { createTimers } from "mobx-swiss-knife";
@@ -38,8 +11,8 @@ const timers = createTimers();
 
 const saveDraft = (text: string) => {
   timers.debounced(() => {
-    console.log("Save draft:", text);
-  }, 400);
+    console.log('Save draft:', text);
+  }, { id: 'draft', timeout: 400 });
 };
 
 saveDraft("hello");
@@ -48,7 +21,9 @@ saveDraft("hello world");
 console.log(timers.isEmpty);
 ```
 
-## Example with rate limiting
+The same `id` refers to the same timer: a new call updates the callback and restarts the debounce. Therefore, only the latest text is saved here.
+
+## Example: Throttle and `runAgain`
 
 ```ts
 import { createTimers } from "mobx-swiss-knife";
@@ -56,6 +31,25 @@ import { createTimers } from "mobx-swiss-knife";
 const timers = createTimers();
 
 timers.throttled(() => {
-  console.log("Update position");
-}, 300);
+  console.log('Update position');
+}, { id: 'position', timeout: 300 });
 ```
+
+The callback receives `{ runAgain }`. Calling `runAgain()` keeps the timer registered and schedules the next run:
+
+```ts
+timers.debounced(({ runAgain }) => {
+  syncWithServer();
+  if (shouldContinue) runAgain();
+}, { id: 'sync', timeout: 1000 });
+```
+
+## Properties and Methods
+
+- `isEmpty` — whether there are no active timers.
+- `debounced(fn, timeout)` — short form with a numeric timeout.
+- `debounced(fn, { id, timeout, leading, trailing })` — full debounce configuration.
+- `throttled(fn, timeout | config)` — limit the execution frequency.
+- `destroyTimer(id)` — cancel one timer by id.
+- `clean()` — cancel all timers.
+- `abortSignal` in the configuration — automatically clean up on abort.

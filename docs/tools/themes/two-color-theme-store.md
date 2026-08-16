@@ -1,53 +1,43 @@
 # `TwoColorThemeStore`
 
-Helps manage the light and dark theme of an application from one place. It is useful for apps where the user can choose a theme manually or follow the system setting.
+`TwoColorThemeStore` separates the theme selected by the user from the effective color scheme. `theme` can be `auto`, while `colorScheme` always returns either `light` or `dark`, which is convenient to apply to `data-theme` and CSS.
 
-## When to use
-
-- When you need to switch the app between light and dark themes.
-- When it is important to support a "follow system" mode.
-- When you want to persist the user's choice between sessions.
-
-## What it can do
-
-- Store the selected theme.
-- Return the final color scheme that can be used directly in the UI.
-- Switch the theme manually and react to the system theme.
-
-## Constructor parameters
-
-- `localStorageKey` — Storage key for the saved theme, or `false` to disable persistence.
-- `fallbackTheme` — Default theme used when nothing is stored yet.
-- `abortSignal` — Stops listeners and reactions when the related lifecycle is aborted.
-- `onChangeTheme` — Called when the selected theme changes.
-- `onChangeColorScheme` — Called when the final resolved color scheme changes.
-
-## Public properties
-
-- `theme` — Currently selected theme.
-- `mediaColorScheme` — Current system color scheme.
-- `colorScheme` — Final effective color scheme used by the app.
-
-## Public methods
-
-- `setTheme(theme)` — Sets the current theme explicitly.
-- `switchTheme()` — Switches to the next theme in the built-in cycle.
-- `destroy()` — Cleans up listeners and storage bindings.
-
-## Usage example
+## Example: Application Theme
 
 ```ts
 import { createTwoColorThemeStore } from "mobx-swiss-knife";
 
 const themeStore = createTwoColorThemeStore({
-  localStorageKey: "app-theme",
+  localStorageKey: 'app-theme',
+  fallbackTheme: 'auto',
+  onChangeColorScheme: (scheme) => {
+    document.documentElement.dataset.theme = scheme;
+  },
 });
 
 console.log(themeStore.theme);
 console.log(themeStore.colorScheme);
 
-themeStore.setTheme("dark");
+themeStore.setTheme('dark');
 themeStore.switchTheme();
 
 console.log(themeStore.mediaColorScheme);
 ```
+
+With `theme: 'auto'`, the store listens to `prefers-color-scheme` and changes `colorScheme` when the system setting changes. `onChangeTheme` and `onChangeColorScheme` are called immediately after the store is created and then on changes.
+
+## Properties
+
+- `theme` — the selected mode: `'light'`, `'dark'`, or `'auto'`.
+- `mediaColorScheme` — the current system scheme: `'light'` or `'dark'`.
+- `colorScheme` — the effective scheme to use in the UI.
+
+## Methods and Options
+
+- `setTheme(theme)` — set the mode explicitly.
+- `switchTheme()` — cycle through `dark → auto → light → dark`.
+- `destroy()` — remove the media-query listener and reactions.
+- `localStorageKey` — the storage key; `false` disables persistence.
+- `fallbackTheme` — the mode used when storage is empty; defaults to `'auto'`.
+- `onChangeTheme`, `onChangeColorScheme` — change callbacks.
+- `abortSignal` — an external lifecycle signal.

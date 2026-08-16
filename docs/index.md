@@ -1,10 +1,9 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: '{packageJson.name}'
-  text: set of various utilities
+  name: '@{packageJson.name}'
+  text: '@{packageJson.description}'
   tagline: with MobX power
   image:
     src: /logo.png
@@ -14,6 +13,6 @@ hero:
       link: /introduction/getting-started.md
     - theme: alt
       text: View on GitHub
-      link: https://github.com/{packageJson.author}/{packageJson.name}
+      link: https://github.com/@{packageJson.author}/@{packageJson.name}
 
 ---

@@ -1,57 +1,57 @@
 # `Stepper`
 
-Helps manage step-by-step flows in the UI. It works well for setup wizards, onboarding, checkout flows, and any process where the user moves through several screens in sequence.
+`Stepper` stores a position in a sequential flow: onboarding, checkout, or a setup wizard. The index is safely clamped to the array bounds, so “back” and “next” buttons do not require manual checks.
 
-## When to use
-
-- When you need to store the current step and move between steps.
-- When it is important to know whether there is a previous step or whether the current step is the last one.
-- When the list of steps can change while the flow is running.
-
-## What it can do
-
-- Move forward and backward through steps.
-- Jump to a specific step.
-- Provide access to the current step and related state.
-
-## Constructor parameters
-
-- `steps` — Initial list of steps or a function that returns the current list.
-- `abortSignal` — Stops internal syncing when dynamic steps are used.
-
-## Public properties
-
-- `activeStepIndex` — Index of the current step.
-- `steps` — Current list of steps.
-- `activeStep` — Current active step value.
-- `isNextStepLast` — Shows whether the next step would be the last one.
-- `isLastStep` — Shows whether the current step is the last one.
-- `hasPrevStep` — Shows whether there is a previous step.
-
-## Public methods
-
-- `setSteps(steps)` — Replaces the current list of steps.
-- `goToStep(index)` — Moves to a specific step index.
-- `nextStep()` — Moves to the next step.
-- `prevStep()` — Moves to the previous step.
-- `checkStepCompleted(index)` — Shows whether a step is already completed.
-- `addStep(step, position?)` — Adds a new step to the end or to a specific position.
-- `removeStep(step)` — Removes a step by value.
-
-## Usage example
+## Example: Checkout Wizard
 
 ```ts
 import { createStepper } from "mobx-swiss-knife";
 
 const stepper = createStepper({
-  steps: ["Contacts", "Delivery", "Confirmation"],
+  steps: ['Contacts', 'Delivery', 'Confirmation'],
 });
 
-console.log(stepper.activeStep);
+function next() {
+  if (stepper.isLastStep) return submitOrder();
+  stepper.nextStep();
+}
 
-stepper.nextStep();
-stepper.goToStep(2);
+function back() {
+  if (stepper.hasPrevStep) stepper.prevStep();
+}
 
-console.log(stepper.isLastStep);
-console.log(stepper.hasPrevStep);
+console.log(stepper.activeStepIndex, stepper.activeStep);
 ```
+
+## Dynamic Steps
+
+`steps` can be a function. This is useful when a step depends on the selected plan or a feature flag:
+
+```ts
+const stepper = createStepper({
+  steps: () =>
+    plan === 'business'
+      ? ['Company', 'Members', 'Payment']
+      : ['Profile', 'Payment'],
+});
+```
+
+When the list changes, the current index is adjusted to the valid range.
+
+## Properties
+
+- `steps` — the current list of steps.
+- `activeStepIndex` — the current step index, starting at `0`.
+- `activeStep` — the current step value.
+- `isNextStepLast` — whether the next step is the last one.
+- `isLastStep` — whether the current step is the last one.
+- `hasPrevStep` — whether a previous step exists.
+
+## Methods
+
+- `setSteps(steps)` — replace the list.
+- `goToStep(index)` — go to an index.
+- `nextStep()` / `prevStep()` — move forward or backward.
+- `checkStepCompleted(index)` — check whether the index is completed (`index < activeStepIndex`).
+- `addStep(step, position?)` — add a step at the end or at a position; duplicates are not added.
+- `removeStep(step)` — remove a step by value.
