@@ -53,15 +53,18 @@ export class Time<TValue = Date> {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/time) */
   get ms() {
     this.atom.reportObserved();
     return Date.now();
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/time) */
   get date() {
     return new Date(this.ms);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/time) */
   get value() {
     if (this.config?.map) {
       return this.config.map(this.date);
@@ -70,6 +73,7 @@ export class Time<TValue = Date> {
     return this.date as TValue;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/time) */
   destroy() {
     this.abortController.abort();
     this.stopInterval();

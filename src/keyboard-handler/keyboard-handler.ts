@@ -30,20 +30,24 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
   /**
    * Is user using keyboard input
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   isActivated: boolean;
 
   /**
    * User actions
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   get actions() {
     const usingActions = this.localActions ?? this.config.actions;
     return callFunction(usingActions) ?? [];
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   setActions(actions: Maybe<Action[]>) {
     this.localActions = actions;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   activate = () => {
     if (this.isActivated) {
       return;
@@ -52,6 +56,7 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     this.config.onActivate?.();
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   deactivate = () => {
     if (!this.isActivated) {
       return;
@@ -94,6 +99,7 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   checkKey(event: KeyboardEvent, key: string) {
     if (key === 'Shift' && event.shiftKey) return true;
     if ((key === 'Ctrl' || key === 'Control') && event.ctrlKey) return true;
@@ -111,6 +117,7 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     return key === event.key || key === event.code;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/keyboard-handler) */
   destroy(): void {
     this.abortController.abort();
   }

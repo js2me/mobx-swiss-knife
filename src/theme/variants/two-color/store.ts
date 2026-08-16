@@ -17,7 +17,9 @@ export class TwoColorThemeStore {
   protected abortSignal: AbortSignal;
   protected storageModel?: Storage;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   theme!: Theme;
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   mediaColorScheme: ColorScheme;
 
   constructor(protected config?: TwoColorThemeStoreConfig) {
@@ -69,6 +71,7 @@ export class TwoColorThemeStore {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   get colorScheme() {
     return this.theme === 'auto' ? this.mediaColorScheme : this.theme;
   }
@@ -100,10 +103,12 @@ export class TwoColorThemeStore {
     this.mediaColorScheme = this.getMediaColorScheme();
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   setTheme(theme: Theme) {
     this.theme = theme;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   switchTheme() {
     if (this.theme === 'dark') {
       this.setTheme('auto');
@@ -114,6 +119,7 @@ export class TwoColorThemeStore {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store) */
   destroy() {
     this.abortController.abort();
     this.storageModel?.destroy();

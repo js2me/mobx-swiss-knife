@@ -52,6 +52,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
    * Loads a model and stores it in the context.
    * The model is loaded by calling the provided function.
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   load<TModel>(
     key: keyof any,
     fn: () => Promise<TModel>,
@@ -70,6 +71,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
    * Connects a model loader to a property of the context.
    * This method will automatically load the model when the property is accessed.
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   connect<TModel>({
     property,
     fn,
@@ -138,10 +140,12 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   get hasErroredModels() {
     return [...this.storage.values()].some((it) => it.error != null);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   get hasLoadingModels() {
     return [...this.storage.values()].some((it) => it.data == null);
   }
@@ -149,6 +153,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   /**
    * Returns the loaded model instance for the given property.
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   get<TProperty extends keyof TContext>(
     property: TProperty,
   ): TContext[TProperty] | null;
@@ -169,6 +174,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   /**
    * Returns the model load error for the given property if it exists, otherwise returns null.
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   getError<TProperty extends keyof TContext>(property: TProperty): Error | null;
   /**
    * Returns the model load error for the given property if it exists, otherwise returns null.
@@ -185,6 +191,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
   /**
    * Checks if the model for the given property is currently loading.
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   isLoading<TProperty extends keyof TContext>(property: TProperty): boolean;
   /**
    * Checks if the model for the given property is currently loading.
@@ -198,6 +205,7 @@ export class ModelLoader<TContext extends AnyObject = AnyObject> {
     return this.storage.get(key)?.data == null;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/model-loader) */
   destroy() {
     this.abortController.abort();
   }

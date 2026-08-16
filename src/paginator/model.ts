@@ -24,6 +24,7 @@ export class Paginator {
 
   private pageSize: number;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   pageSizes: number[];
 
   private pagesCount: number;
@@ -59,6 +60,7 @@ export class Paginator {
     makeObservable(this);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   get inputData(): InputPaginationData {
     return {
       page: this.page,
@@ -66,6 +68,7 @@ export class Paginator {
     };
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   get data(): PaginationData {
     return {
       ...this.inputData,
@@ -73,35 +76,43 @@ export class Paginator {
     };
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   toPreviousPage() {
     this.toPage(this.page - 1);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   toNextPage() {
     this.toPage(this.page + 1);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   toPage(page: number) {
     this.page = Math.max(1, Math.min(page, this.pagesCount));
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   setPageSize(pageSize: number) {
     this.pageSize = pageSize;
     this.reset();
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   setPagesCount(pagesCount: number) {
     this.pagesCount = pagesCount;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   setPageSizes(pageSizes: number[]) {
     this.pageSizes = pageSizes;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   reset() {
     this.toPage(1);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   syncWith(getParametersFunction: () => Partial<PaginationData>) {
     reaction(
       getParametersFunction,
@@ -119,6 +130,7 @@ export class Paginator {
     );
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   createFromOffsetData({
     offset,
     limit,
@@ -135,6 +147,7 @@ export class Paginator {
     };
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   createOffsetData({
     pageSize,
     pagesCount,
@@ -147,10 +160,12 @@ export class Paginator {
     };
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   toOffsetData(): PaginationOffsetData {
     return this.createOffsetData(this.data);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */
   destroy() {
     this.abortController.abort();
   }

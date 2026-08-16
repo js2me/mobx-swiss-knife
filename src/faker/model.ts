@@ -27,6 +27,7 @@ export class FakerLoader {
     makeObservable(this);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
   get instance(): Faker {
     const instance = this.modelLoader.get(this.locale);
 
@@ -40,6 +41,7 @@ export class FakerLoader {
     return instance!;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
   async load(locale: string = this.locale): Promise<Faker> {
     this.locale = locale;
 
@@ -51,14 +53,17 @@ export class FakerLoader {
     return this.modelLoader.get(locale);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
   get isLoading() {
     return this.modelLoader.isLoading(this.locale);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
   get error() {
     return this.modelLoader.getError(this.locale);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
   destroy() {
     this.modelLoader.destroy();
   }

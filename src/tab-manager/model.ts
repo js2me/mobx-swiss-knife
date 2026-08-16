@@ -13,6 +13,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
 
   private localSettedTabs?: ReadonlyArray<T> | Array<T>;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   get tabs() {
     if (this.localSettedTabs) {
       return this.localSettedTabs;
@@ -52,15 +53,18 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
    *
    * :NOTE: config.tabs function will be ignored!
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   setTabs = (tabs: Array<T> | ReadonlyArray<T>) => {
     this.localSettedTabs = tabs;
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   getTabData = <TId extends T['id']>(tabId: TId): Extract<T, { id: TId }> => {
     const index = this.tabIndexesMap.get(tabId)!;
     return this.tabs[index] as Extract<T, { id: TId }>;
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   get activeTab(): T['id'] {
     const tabId = this.config.getActiveTab
       ? this.config.getActiveTab(this.tabs)
@@ -77,14 +81,17 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
     return activeTabId;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   get tabsCount() {
     return this.tabs.length;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   get activeTabData() {
     return this.getTabData(this.activeTab);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   setActiveTab = (activeTabId: T['id']) => {
     if (this.activeTab === activeTabId) {
       return;
@@ -107,6 +114,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
   /**
    * @deprecated nothing to destroy
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager) */
   destroy() {}
 }
 

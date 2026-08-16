@@ -17,9 +17,13 @@ import type {
  *
  */
 export class DatesComparator implements DatesComparison {
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   dates: DatesToCompare | null = null;
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   hours: number = 0;
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   minutes: number = 0;
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   seconds: number = 0;
 
   private timeoutId: Maybe<ReturnType<typeof setTimeout>>;
@@ -43,6 +47,7 @@ export class DatesComparator implements DatesComparison {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   setDates(dates: DatesToCompare) {
     clearTimeout(this.timeoutId!);
     this.dates = dates;
@@ -97,18 +102,22 @@ export class DatesComparator implements DatesComparison {
     }
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   get isEmpty() {
     return this.totalHours === 0;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   get totalHours() {
     return this.hours + this.minutes / 60 + this.seconds / 3600;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   get totalMinutes() {
     return this.hours * 60 + this.minutes + this.seconds / 60;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   get totalSeconds() {
     return this.hours * 3600 + this.minutes * 60 + this.seconds;
   }
@@ -127,6 +136,7 @@ export class DatesComparator implements DatesComparison {
     return date;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/dates-comparator) */
   reset() {
     clearTimeout(this.timeoutId!);
     this.dates = null;

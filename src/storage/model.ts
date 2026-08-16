@@ -48,6 +48,7 @@ export class Storage {
     return `${prefix ? `${prefix}/` : ''}${namespace ? `${namespace}/` : ''}${key}`;
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/storage) */
   get<TValue>(config: GetFromStorageParams<TValue>): TValue | null {
     const key = this.createKey(config);
     const storage = this.getStorage(config);
@@ -74,6 +75,7 @@ export class Storage {
     return JSON.stringify(value);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/storage) */
   set<TValue>(config: SetToStorageParams<TValue>): void {
     const key = this.createKey(config);
     const storage = this.getStorage(config);
@@ -85,6 +87,7 @@ export class Storage {
     );
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/storage) */
   syncProperty<
     TContext extends Record<string, any>,
     TProperty extends keyof TContext,
@@ -133,6 +136,7 @@ export class Storage {
    * Reset model
    * Do not clean storages
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/storage) */
   destroy() {
     this.abortController.abort();
   }

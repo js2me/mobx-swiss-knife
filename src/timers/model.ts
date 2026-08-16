@@ -36,6 +36,7 @@ export class Timers {
   /**
    * Это поле означает что все таймеры были либо завершены, либо удалены
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/timers) */
   get isEmpty() {
     return this.configsMap.size === 0;
   }
@@ -45,6 +46,7 @@ export class Timers {
    * в случае если этот метод будет вызван повторно, то предыдущий таймер будет перезапущен
    * с новой fn функцией
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/timers) */
   throttled = (fn: TimedCallback, scheduleConfigRaw?: TimerConfigRaw) => {
     const cfg = this.getTimerConfig(fn, 'throttle', scheduleConfigRaw);
 
@@ -83,6 +85,7 @@ export class Timers {
    * в случае если этот метод будет вызван повторно, то предыдущий таймер будет очищен и перезапущен снова
    * с новой fn функцией
    */
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/timers) */
   debounced = (fn: TimedCallback, scheduleConfigRaw?: TimerConfigRaw) => {
     const cfg = this.getTimerConfig(fn, 'debounce', scheduleConfigRaw);
 
@@ -144,11 +147,13 @@ export class Timers {
     };
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/timers) */
   destroyTimer(id: string) {
     this.configsMap.get(id)?.timedFn?.cancel();
     this.configsMap.delete(id);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/timers) */
   clean() {
     this.abortController.abort();
     this.configsMap.forEach((config) => {

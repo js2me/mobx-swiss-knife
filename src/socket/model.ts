@@ -14,10 +14,13 @@ export class Socket<
   private abortController: AbortController;
   private instance: WebSocket | null = null;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   isOpen = false;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   message: InputMessageType | null = null;
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   isReconnectEnabled = false;
 
   protected serializeOutputMessage: (
@@ -57,11 +60,13 @@ export class Socket<
     makeObservable(this);
   }
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   resendNotSentMessages = () => {
     this.notSentMessages.forEach(this.send);
     this.notSentMessages.length = 0;
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   send = (message: OutputMessageType) => {
     if (this.isOpen) {
       this.instance!.send(this.serializeOutputMessage(message));
@@ -70,6 +75,7 @@ export class Socket<
     }
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   open = (
     ...arguments_: Payload extends void
       ? [payload?: Payload]
@@ -114,10 +120,12 @@ export class Socket<
     this.open(this.payload);
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   close = (code?: number | null) => {
     this.instance?.close(code ?? this.defaultCloseCode);
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   onSocketMessage = (message: MessageEvent<any>) => {
     try {
       this.message = this.deserializeInputMessage(message.data);
@@ -134,6 +142,7 @@ export class Socket<
     this.refreshSocketState();
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   onSocketClose = (event: CloseEvent) => {
     if (
       this.isReconnectEnabled &&
@@ -145,11 +154,13 @@ export class Socket<
     this.refreshSocketState();
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   // biome-ignore lint/correctness/noUnusedFunctionParameters: helpful to child classes
   onSocketOpen = (event: Event) => {
     this.refreshSocketState();
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   onSocketError = (event: Event) => {
     if (
       this.isReconnectEnabled &&
@@ -162,6 +173,7 @@ export class Socket<
     this.refreshSocketState();
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   getSocketUrl = (payload: Payload) => {
     return typeof this.config.url === 'function'
       ? this.config.url(payload)
@@ -177,6 +189,7 @@ export class Socket<
     }
   };
 
+  /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */
   destroy() {
     this.abortController.abort();
   }
