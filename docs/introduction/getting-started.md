@@ -55,7 +55,7 @@ console.log(tabs.activeTab, time.value);
 - Need a countdown: `DatesComparator`; current time: `Time`.
 - Need debounce/throttle: `Timers`; a periodic counter: `Ticker`.
 - Need keyboard shortcuts: `KeyboardHandler`; WebSocket: `Socket`.
-- Need a lazy model or Faker: `ModelLoader` and `FakerLoader`.
+- Need a lazy model: `ModelLoader`.
 - Need a theme or settings persistence: `TwoColorThemeStore` and `Storage`.
 
 ## Lifecycle

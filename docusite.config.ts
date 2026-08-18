@@ -33,7 +33,6 @@ export default defineConfig({
       text: 'Tools',
       items: [
         { text: 'DatesComparator', link: '/tools/dates-comparator' },
-        { text: 'FakerLoader', link: '/tools/faker-loader' },
         { text: 'KeyboardHandler', link: '/tools/keyboard-handler' },
         { text: 'ModelLoader', link: '/tools/model-loader' },
         { text: 'Paginator', link: '/tools/paginator' },
