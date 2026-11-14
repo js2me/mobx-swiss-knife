@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.16.0
+
+### Minor Changes
+
+- [#26](https://github.com/js2me/mobx-swiss-knife/pull/26) [`2f6bc60`](https://github.com/js2me/mobx-swiss-knife/commit/2f6bc6000e5b8aa350db6310e305a52260a958bc) Thanks [@js2me](https://github.com/js2me)! - Add MobX 7 compatibility while retaining support for MobX 6.
+
 ## 1.15.2
 
 ### Patch Changes
