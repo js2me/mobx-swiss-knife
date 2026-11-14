@@ -1,5 +1,6 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { observable, reaction } from 'mobx';
+import * as annotation from 'yummies/mobx';
 import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { TickerConfig } from './model.types.js';
