@@ -1,9 +1,6 @@
 import type { Faker } from '@faker-js/faker';
-import {
-  annotation,
-  applyObservable,
-  type ObservableAnnotationsArray,
-} from 'yummies/mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 import type { AnyObject } from 'yummies/types';
 
 import { ModelLoader } from '../model-loader/model-loader.js';

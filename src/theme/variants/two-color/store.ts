@@ -1,10 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { computed, reaction } from 'mobx';
-import {
-  annotation,
-  applyObservable,
-  type ObservableAnnotationsArray,
-} from 'yummies/mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import { Storage } from '../../../storage/index.js';
 

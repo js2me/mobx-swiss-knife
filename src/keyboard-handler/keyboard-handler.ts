@@ -1,11 +1,8 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import {
-  annotation,
-  applyObservable,
-  type ObservableAnnotationsArray,
-} from 'yummies/mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 import type { Maybe, MaybeFn } from 'yummies/types';
 import type {
   KeyboardHandlerAction,

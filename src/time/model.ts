@@ -1,11 +1,8 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { createAtom, type IAtom, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import {
-  annotation,
-  applyObservable,
-  type ObservableAnnotationsArray,
-} from 'yummies/mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { TimeConfig } from './model.types.js';
 

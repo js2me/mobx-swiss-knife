@@ -1,9 +1,6 @@
 import { action, computed } from 'mobx';
-import {
-  annotation,
-  applyObservable,
-  type ObservableAnnotationsArray,
-} from 'yummies/mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
