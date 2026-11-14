@@ -1,13 +1,24 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import { annotation, applyObservable, observableMap } from 'yummies/mobx';
+import {
+  annotation,
+  applyObservable,
+  type ObservableAnnotationsArray,
+  observableMap,
+} from 'yummies/mobx';
 import type { Maybe, MaybeFn } from 'yummies/types';
 import type {
   KeyboardHandlerAction,
   KeyboardHandlerActivationStrategy,
   KeyboardHandlerConfig,
 } from './keyboard-handler.types.js';
+
+const annotations: ObservableAnnotationsArray<KeyboardHandler<any>> = [
+  [annotation.observable('ref'), 'isActivated', 'localActions'],
+  [annotation.computed('struct'), 'actions'],
+  [observableMap.action.bound, 'handleKeyboardClick', 'setActions'],
+];
 
 /**
  * Keyboard events handler
@@ -123,11 +134,7 @@ export class KeyboardHandler<Action extends KeyboardHandlerAction> {
     };
     this.isActivated = !!(this.activateStrategy.type === 'immidiately');
 
-    applyObservable(this, [
-      [annotation.observable('ref'), 'isActivated', 'localActions'],
-      [annotation.computed('struct'), 'actions'],
-      [observableMap.action.bound, 'handleKeyboardClick', 'setActions'],
-    ]);
+    applyObservable(this, annotations);
 
     if (this.activateStrategy.type === 'element-focus') {
       const ref = this.activateStrategy.ref;

@@ -1,9 +1,18 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { createAtom, type IAtom, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import { annotation, applyObservable } from 'yummies/mobx';
+import {
+  annotation,
+  applyObservable,
+  type ObservableAnnotationsArray,
+} from 'yummies/mobx';
 
 import type { TimeConfig } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<Time<any>> = [
+  [annotation.computed('struct'), 'value'],
+  [annotation.observable('ref'), 'updatePer'],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/time)
@@ -23,10 +32,7 @@ export class Time<TValue = Date> {
       () => this.stopInterval(),
     );
 
-    applyObservable(this, [
-      [annotation.computed('struct'), 'value'],
-      [annotation.observable('ref'), 'updatePer'],
-    ]);
+    applyObservable(this, annotations);
 
     if (typeof config?.updatePer === 'function') {
       reaction(

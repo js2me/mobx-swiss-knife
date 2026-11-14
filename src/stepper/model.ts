@@ -1,8 +1,25 @@
 import { observable, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import { applyObservable, observableMap } from 'yummies/mobx';
+import {
+  applyObservable,
+  type ObservableAnnotationsArray,
+  observableMap,
+} from 'yummies/mobx';
 
 import type { StepperConfig } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<Stepper<any>> = [
+  [observable, 'activeStepIndex', 'steps'],
+  [
+    observableMap.action.bound,
+    'setSteps',
+    'goToStep',
+    'nextStep',
+    'prevStep',
+    'addStep',
+    'removeStep',
+  ],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/stepper)
@@ -22,18 +39,7 @@ export class Stepper<StepData> {
   constructor({ steps = [], abortSignal }: StepperConfig<StepData>) {
     this.steps = callFunction(steps);
 
-    applyObservable(this, [
-      [observable, 'activeStepIndex', 'steps'],
-      [
-        observableMap.action.bound,
-        'setSteps',
-        'goToStep',
-        'nextStep',
-        'prevStep',
-        'addStep',
-        'removeStep',
-      ],
-    ]);
+    applyObservable(this, annotations);
 
     if (typeof steps === 'function') {
       reaction(steps, (steps) => runInAction(() => this.setSteps(steps)), {

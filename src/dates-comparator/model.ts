@@ -1,5 +1,10 @@
 import { timeDuration } from 'yummies/date-time';
-import { annotation, applyObservable, observableMap } from 'yummies/mobx';
+import {
+  annotation,
+  applyObservable,
+  type ObservableAnnotationsArray,
+  observableMap,
+} from 'yummies/mobx';
 import type { Maybe } from 'yummies/types';
 
 import type {
@@ -9,6 +14,11 @@ import type {
   DatesToCompare,
   ResolvedCompareDateType,
 } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<DatesComparator> = [
+  [annotation.observable('ref'), 'dates', 'hours', 'minutes', 'seconds'],
+  [observableMap.action.bound, 'compareDates', 'setDates'],
+];
 
 /**
  * Entity for comparing two dates, allows you to dynamically get the difference between two dynamic dates
@@ -32,10 +42,7 @@ export class DatesComparator implements DatesComparison {
     if (this.config?.dates != null) {
       this.setDates(this.config.dates);
     }
-    applyObservable(this, [
-      [annotation.observable('ref'), 'dates', 'hours', 'minutes', 'seconds'],
-      [observableMap.action.bound, 'compareDates', 'setDates'],
-    ]);
+    applyObservable(this, annotations);
 
     if (this.config?.abortSignal) {
       this.config.abortSignal.addEventListener('abort', () => {
