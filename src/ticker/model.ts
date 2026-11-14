@@ -1,5 +1,6 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { action, makeObservable, observable, reaction } from 'mobx';
+import { observable, reaction } from 'mobx';
+import { applyObservable, observableMap } from 'yummies/mobx';
 
 import type { TickerConfig } from './model.types.js';
 
@@ -25,15 +26,10 @@ export class Ticker {
     this.ticksPer = config.ticksPer;
     this.intervalId = null;
 
-    observable(this, 'ticks');
-    observable(this, 'ticksPer');
-    observable(this, 'isTicking');
-    action.bound(this, 'tick');
-    action.bound(this, 'start');
-    action.bound(this, 'stop');
-    action.bound(this, 'reset');
-
-    makeObservable(this);
+    applyObservable(this, [
+      [observable, 'ticks', 'ticksPer', 'isRunning'],
+      [observableMap.action.bound, 'tick', 'start', 'stop', 'reset'],
+    ]);
 
     reaction(() => this.ticksPer, this.start, {
       signal: this.abortController.signal,

@@ -1,5 +1,5 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { autorun, makeObservable, runInAction } from 'mobx';
+import { autorun, runInAction } from 'mobx';
 
 import type {
   GetFromStorageParams,
@@ -18,8 +18,6 @@ export class Storage {
   constructor(protected config?: StorageModelConfig) {
     this.abortController = new LinkedAbortController(config?.abortSignal);
     this.abortSignal = this.abortController.signal;
-
-    makeObservable(this);
   }
 
   protected getStorage(

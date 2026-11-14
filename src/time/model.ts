@@ -1,14 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import {
-  computed,
-  createAtom,
-  type IAtom,
-  makeObservable,
-  observable,
-  reaction,
-  runInAction,
-} from 'mobx';
+import { createAtom, type IAtom, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
+import { annotation, applyObservable } from 'yummies/mobx';
 
 import type { TimeConfig } from './model.types.js';
 
@@ -30,9 +23,10 @@ export class Time<TValue = Date> {
       () => this.stopInterval(),
     );
 
-    computed.struct(this, 'value');
-    observable.ref(this, 'updatePer');
-    makeObservable(this);
+    applyObservable(this, [
+      [annotation.computed('struct'), 'value'],
+      [annotation.observable('ref'), 'updatePer'],
+    ]);
 
     if (typeof config?.updatePer === 'function') {
       reaction(

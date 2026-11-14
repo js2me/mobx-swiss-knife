@@ -1,5 +1,5 @@
-import { action, makeObservable, observable } from 'mobx';
 import { timeDuration } from 'yummies/date-time';
+import { annotation, applyObservable, observableMap } from 'yummies/mobx';
 import type { Maybe } from 'yummies/types';
 
 import type {
@@ -32,13 +32,10 @@ export class DatesComparator implements DatesComparison {
     if (this.config?.dates != null) {
       this.setDates(this.config.dates);
     }
-    observable.ref(this, 'dates');
-    observable.ref(this, 'hours');
-    observable.ref(this, 'minutes');
-    observable.ref(this, 'seconds');
-    action.bound(this, 'compareDates');
-    action.bound(this, 'setDates');
-    makeObservable(this);
+    applyObservable(this, [
+      [annotation.observable('ref'), 'dates', 'hours', 'minutes', 'seconds'],
+      [observableMap.action.bound, 'compareDates', 'setDates'],
+    ]);
 
     if (this.config?.abortSignal) {
       this.config.abortSignal.addEventListener('abort', () => {

@@ -1,11 +1,6 @@
-import {
-  action,
-  makeObservable,
-  observable,
-  reaction,
-  runInAction,
-} from 'mobx';
+import { observable, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
+import { applyObservable, observableMap } from 'yummies/mobx';
 
 import type { StepperConfig } from './model.types.js';
 
@@ -27,16 +22,18 @@ export class Stepper<StepData> {
   constructor({ steps = [], abortSignal }: StepperConfig<StepData>) {
     this.steps = callFunction(steps);
 
-    observable(this, 'activeStepIndex');
-    observable(this, 'steps');
-    action.bound(this, 'setSteps');
-    action.bound(this, 'goToStep');
-    action.bound(this, 'nextStep');
-    action.bound(this, 'prevStep');
-    action.bound(this, 'addStep');
-    action.bound(this, 'removeStep');
-
-    makeObservable(this);
+    applyObservable(this, [
+      [observable, 'activeStepIndex', 'steps'],
+      [
+        observableMap.action.bound,
+        'setSteps',
+        'goToStep',
+        'nextStep',
+        'prevStep',
+        'addStep',
+        'removeStep',
+      ],
+    ]);
 
     if (typeof steps === 'function') {
       reaction(steps, (steps) => runInAction(() => this.setSteps(steps)), {

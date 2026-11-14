@@ -1,5 +1,5 @@
 import type { Faker } from '@faker-js/faker';
-import { computed, makeObservable } from 'mobx';
+import { annotation, applyObservable } from 'yummies/mobx';
 import type { AnyObject } from 'yummies/types';
 
 import { ModelLoader } from '../model-loader/model-loader.js';
@@ -22,9 +22,9 @@ export class FakerLoader {
     });
     this.locale = this.config?.defaultLocale ?? 'en';
 
-    computed.struct(this, 'isLoading');
-    computed.struct(this, 'error');
-    makeObservable(this);
+    applyObservable(this, [
+      [annotation.computed('struct'), 'isLoading', 'error'],
+    ]);
   }
 
   /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/faker-loader) */
