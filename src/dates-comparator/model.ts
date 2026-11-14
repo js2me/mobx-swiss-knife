@@ -3,7 +3,6 @@ import {
   annotation,
   applyObservable,
   type ObservableAnnotationsArray,
-  observableMap,
 } from 'yummies/mobx';
 import type { Maybe } from 'yummies/types';
 
@@ -16,8 +15,8 @@ import type {
 } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<DatesComparator> = [
-  [annotation.observable('ref'), 'dates', 'hours', 'minutes', 'seconds'],
-  [observableMap.action.bound, 'compareDates', 'setDates'],
+  [annotation.observableRef, 'dates', 'hours', 'minutes', 'seconds'],
+  [annotation.actionBound, 'compareDates', 'setDates'],
 ];
 
 /**

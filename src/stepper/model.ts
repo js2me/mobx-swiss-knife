@@ -1,17 +1,13 @@
 import { observable, reaction, runInAction } from 'mobx';
 import { callFunction } from 'yummies/common';
-import {
-  applyObservable,
-  type ObservableAnnotationsArray,
-  observableMap,
-} from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { StepperConfig } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<Stepper<any>> = [
   [observable, 'activeStepIndex', 'steps'],
   [
-    observableMap.action.bound,
+    annotation.actionBound,
     'setSteps',
     'goToStep',
     'nextStep',

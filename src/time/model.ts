@@ -10,8 +10,8 @@ import {
 import type { TimeConfig } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<Time<any>> = [
-  [annotation.computed('struct'), 'value'],
-  [annotation.observable('ref'), 'updatePer'],
+  [annotation.computedStruct, 'value'],
+  [annotation.observableRef, 'updatePer'],
 ];
 
 /**

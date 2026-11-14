@@ -4,7 +4,6 @@ import {
   annotation,
   applyObservable,
   type ObservableAnnotationsArray,
-  observableMap,
 } from 'yummies/mobx';
 
 import { Storage } from '../../../storage/index.js';
@@ -16,14 +15,9 @@ import type {
 } from './store.types.js';
 
 const annotations: ObservableAnnotationsArray<TwoColorThemeStore> = [
-  [annotation.observable('ref'), 'theme', 'mediaColorScheme'],
+  [annotation.observableRef, 'theme', 'mediaColorScheme'],
   [computed, 'colorScheme'],
-  [
-    observableMap.action.bound,
-    'updateMediaColorSchema',
-    'setTheme',
-    'switchTheme',
-  ],
+  [annotation.actionBound, 'updateMediaColorSchema', 'setTheme', 'switchTheme'],
 ];
 
 /**

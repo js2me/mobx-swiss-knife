@@ -8,10 +8,10 @@ import {
 import type { TabManagerConfig, TabManagerItem } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<TabManager<any>> = [
-  [annotation.observable('ref'), 'localActiveTab', 'localSettedTabs'],
+  [annotation.observableRef, 'localActiveTab', 'localSettedTabs'],
   [action, 'setTabs', 'setActiveTab'],
   [
-    annotation.computed('struct'),
+    annotation.computedStruct,
     'activeTab',
     'tabs',
     'activeTabData',

@@ -4,7 +4,6 @@ import {
   annotation,
   applyObservable,
   type ObservableAnnotationsArray,
-  observableMap,
 } from 'yummies/mobx';
 
 import type {
@@ -15,10 +14,10 @@ import type {
 } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<Paginator> = [
-  [annotation.observable('ref'), 'page', 'pageSize', 'pageSizes', 'pagesCount'],
+  [annotation.observableRef, 'page', 'pageSize', 'pageSizes', 'pagesCount'],
   [computed, 'inputData', 'data'],
   [
-    observableMap.action.bound,
+    annotation.actionBound,
     'toPreviousPage',
     'toNextPage',
     'toPage',

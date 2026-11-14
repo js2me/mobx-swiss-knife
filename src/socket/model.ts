@@ -9,7 +9,7 @@ import {
 import type { SocketConfig } from './model.types.js';
 
 const annotations: ObservableAnnotationsArray<Socket<any, any, any>> = [
-  [annotation.observable('ref'), 'isOpen', 'message', 'isReconnectEnabled'],
+  [annotation.observableRef, 'isOpen', 'message', 'isReconnectEnabled'],
   [action, 'onSocketMessage', 'refreshSocketState'],
 ];
 

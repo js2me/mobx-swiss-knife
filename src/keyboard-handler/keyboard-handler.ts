@@ -5,7 +5,6 @@ import {
   annotation,
   applyObservable,
   type ObservableAnnotationsArray,
-  observableMap,
 } from 'yummies/mobx';
 import type { Maybe, MaybeFn } from 'yummies/types';
 import type {
@@ -15,9 +14,9 @@ import type {
 } from './keyboard-handler.types.js';
 
 const annotations: ObservableAnnotationsArray<KeyboardHandler<any>> = [
-  [annotation.observable('ref'), 'isActivated', 'localActions'],
-  [annotation.computed('struct'), 'actions'],
-  [observableMap.action.bound, 'handleKeyboardClick', 'setActions'],
+  [annotation.observableRef, 'isActivated', 'localActions'],
+  [annotation.computedStruct, 'actions'],
+  [annotation.actionBound, 'handleKeyboardClick', 'setActions'],
 ];
 
 /**

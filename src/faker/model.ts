@@ -13,7 +13,7 @@ import type { FakerLoaderConfig } from './model.types.js';
 declare const process: { env: { NODE_ENV?: string } };
 
 const annotations: ObservableAnnotationsArray<FakerLoader> = [
-  [annotation.computed('struct'), 'isLoading', 'error'],
+  [annotation.computedStruct, 'isLoading', 'error'],
 ];
 
 /**
