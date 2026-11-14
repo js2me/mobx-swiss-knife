@@ -1,7 +1,14 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { action, makeObservable, observable } from 'mobx';
+import { action } from 'mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { SocketConfig } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<Socket<any, any, any>> = [
+  [annotation.observableRef, 'isOpen', 'message', 'isReconnectEnabled'],
+  [action, 'onSocketMessage', 'refreshSocketState'],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/socket)
@@ -51,13 +58,7 @@ export class Socket<
     this.skipReconnectCodes = this.config.reconnect?.skipCodes ?? [1001, 1005];
     this.reconnectTimeout = this.config.reconnect?.timeout ?? 1000;
 
-    observable.ref(this, 'isOpen');
-    observable.ref(this, 'message');
-    observable.ref(this, 'isReconnectEnabled');
-    action(this, 'onSocketMessage');
-    action(this, 'refreshSocketState');
-
-    makeObservable(this);
+    applyObservable(this, annotations);
   }
 
   /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/socket) */

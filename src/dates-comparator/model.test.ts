@@ -65,6 +65,17 @@ describe('DatesComparator', () => {
       expect(comparator.seconds).toBeGreaterThanOrEqual(0);
     });
 
+    it('should keep setDates bound when passed as a callback', () => {
+      const comparator = new DatesComparator();
+      const dates: DatesToCompare = [new Date(0), new Date(3_600_000)];
+      const setDates = comparator.setDates;
+
+      setDates(dates);
+
+      expect(comparator.dates).toBe(dates);
+      expect(comparator.hours).toBe(1);
+    });
+
     it('should clear timeout when setting new dates', () => {
       const comparator = new DatesComparator();
 

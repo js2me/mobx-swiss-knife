@@ -1,5 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { action, computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, reaction } from 'mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import { Storage } from '../../../storage/index.js';
 
@@ -8,6 +10,12 @@ import type {
   Theme,
   TwoColorThemeStoreConfig,
 } from './store.types.js';
+
+const annotations: ObservableAnnotationsArray<TwoColorThemeStore> = [
+  [annotation.observableRef, 'theme', 'mediaColorScheme'],
+  [computed, 'colorScheme'],
+  [annotation.actionBound, 'updateMediaColorSchema', 'setTheme', 'switchTheme'],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/themes/two-color-theme-store)
@@ -28,14 +36,7 @@ export class TwoColorThemeStore {
 
     this.mediaColorScheme = this.getMediaColorScheme();
 
-    observable.ref(this, 'theme');
-    observable.ref(this, 'mediaColorScheme');
-    computed(this, 'colorScheme');
-    action.bound(this, 'updateMediaColorSchema');
-    action.bound(this, 'setTheme');
-    action.bound(this, 'switchTheme');
-
-    makeObservable(this);
+    applyObservable(this, annotations);
 
     if (config?.localStorageKey === false) {
       this.theme = this.getFallbackTheme();

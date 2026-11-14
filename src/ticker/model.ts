@@ -1,7 +1,14 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import { action, makeObservable, observable, reaction } from 'mobx';
+import { observable, reaction } from 'mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { TickerConfig } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<Ticker> = [
+  [observable, 'ticks', 'ticksPer', 'isRunning'],
+  [annotation.actionBound, 'tick', 'start', 'stop', 'reset'],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/ticker)
@@ -25,15 +32,7 @@ export class Ticker {
     this.ticksPer = config.ticksPer;
     this.intervalId = null;
 
-    observable(this, 'ticks');
-    observable(this, 'ticksPer');
-    observable(this, 'isTicking');
-    action.bound(this, 'tick');
-    action.bound(this, 'start');
-    action.bound(this, 'stop');
-    action.bound(this, 'reset');
-
-    makeObservable(this);
+    applyObservable(this, annotations);
 
     reaction(() => this.ticksPer, this.start, {
       signal: this.abortController.signal,

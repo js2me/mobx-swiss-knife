@@ -1,12 +1,7 @@
 import { LinkedAbortController } from 'linked-abort-controller';
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  reaction,
-  runInAction,
-} from 'mobx';
+import { computed, reaction, runInAction } from 'mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type {
   InputPaginationData,
@@ -14,6 +9,21 @@ import type {
   PaginationOffsetData,
   PaginatorConfig,
 } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<Paginator> = [
+  [annotation.observableRef, 'page', 'pageSize', 'pageSizes', 'pagesCount'],
+  [computed, 'inputData', 'data'],
+  [
+    annotation.actionBound,
+    'toPreviousPage',
+    'toNextPage',
+    'toPage',
+    'setPageSize',
+    'setPagesCount',
+    'setPageSizes',
+    'reset',
+  ],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/paginator)
@@ -43,21 +53,7 @@ export class Paginator {
     this.pagesCount = pagesCount ?? 1;
     this.pageSizes = pageSizes;
 
-    observable.ref(this, 'page');
-    observable.ref(this, 'pageSize');
-    observable.ref(this, 'pageSizes');
-    observable.ref(this, 'pagesCount');
-    computed(this, 'inputData');
-    computed(this, 'data');
-    action.bound(this, 'toPreviousPage');
-    action.bound(this, 'toNextPage');
-    action.bound(this, 'toPage');
-    action.bound(this, 'setPageSize');
-    action.bound(this, 'setPagesCount');
-    action.bound(this, 'setPageSizes');
-    action.bound(this, 'reset');
-
-    makeObservable(this);
+    applyObservable(this, annotations);
   }
 
   /** [Documentation](https://js2me.github.io/mobx-swiss-knife/tools/paginator) */

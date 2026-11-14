@@ -527,6 +527,26 @@ describe('TabManager', () => {
       });
     });
 
+    it('should retain structural equality for computed tabs', () => {
+      const tabManager = new TabManager<TestTab>({
+        tabs: () => [{ id: 'tab1', title: 'Tab 1', content: 'Content 1' }],
+      });
+      const spy = vi.fn();
+      const dispose = reaction(() => tabManager.tabs, spy);
+
+      tabManager.setTabs([
+        { id: 'tab1', title: 'Tab 1', content: 'Content 1' },
+      ]);
+      expect(spy).not.toHaveBeenCalled();
+
+      tabManager.setTabs([
+        { id: 'tab1', title: 'Updated Tab 1', content: 'Content 1' },
+      ]);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      dispose();
+    });
+
     it('should handle boolean tab IDs in setActiveTab', () => {
       const tabs = [
         { id: true, title: 'Tab True', content: 'Content True' },

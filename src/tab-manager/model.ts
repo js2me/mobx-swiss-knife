@@ -1,6 +1,21 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed } from 'mobx';
+import * as annotation from 'yummies/mobx';
+import { applyObservable, type ObservableAnnotationsArray } from 'yummies/mobx';
 
 import type { TabManagerConfig, TabManagerItem } from './model.types.js';
+
+const annotations: ObservableAnnotationsArray<TabManager<any>> = [
+  [annotation.observableRef, 'localActiveTab', 'localSettedTabs'],
+  [action, 'setTabs', 'setActiveTab'],
+  [
+    annotation.computedStruct,
+    'activeTab',
+    'tabs',
+    'activeTabData',
+    'tabsCount',
+  ],
+  [computed, 'tabIndexesMap'],
+];
 
 /**
  * [**Documentation**](https://js2me.github.io/mobx-swiss-knife/tools/tab-manager)
@@ -31,17 +46,7 @@ export class TabManager<T extends TabManagerItem | Readonly<TabManagerItem>> {
   }
 
   constructor(private config: TabManagerConfig<T>) {
-    observable.ref(this, 'localActiveTab');
-    observable.ref(this, 'localSettedTabs');
-    action(this, 'setTabs');
-    action(this, 'setActiveTab');
-    computed.struct(this, 'activeTab');
-    computed.struct(this, 'tabs');
-    computed(this, 'tabIndexesMap');
-    computed.struct(this, 'activeTabData');
-    computed.struct(this, 'tabsCount');
-
-    makeObservable(this);
+    applyObservable(this, annotations);
   }
 
   /**

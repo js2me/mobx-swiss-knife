@@ -1,6 +1,6 @@
 import { LinkedAbortController } from 'linked-abort-controller';
 import { debounce, throttle } from 'lodash-es';
-import { action, makeObservable, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { generateStackBasedId } from 'yummies/id';
 
 import type {
@@ -29,8 +29,6 @@ export class Timers {
     });
 
     this.configsMap = observable.map([], { deep: false });
-
-    makeObservable(this);
   }
 
   /**

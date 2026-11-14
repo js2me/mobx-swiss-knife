@@ -44,10 +44,10 @@
     "@types/lodash-es": "^4.17.12",
     "linked-abort-controller": "^1.1.1",
     "lodash-es": "^4.18.1",
-    "yummies": "^7.17.0"
+    "yummies": "^7.23.0"
   },
   "peerDependencies": {
-    "mobx": "^6.12.4"
+    "mobx": "^6.12.4 || ^7.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.11",
@@ -61,6 +61,7 @@
     "js2me-biome-config": "^1.1.0",
     "jsdom": "^26.1.0",
     "lefthook": "^1.11.16",
+    "mobx": "^6.12.4",
     "nodemon": "^3.1.10",
     "rimraf": "^6.0.1",
     "sborshik": "^3.0.7",
