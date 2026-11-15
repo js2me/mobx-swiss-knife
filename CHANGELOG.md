@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.16.1
+
+### Patch Changes
+
+- [#28](https://github.com/js2me/mobx-swiss-knife/pull/28) [`b4cfc18`](https://github.com/js2me/mobx-swiss-knife/commit/b4cfc181664e398aec9699f2769f4ca1553e8cee) Thanks [@js2me](https://github.com/js2me)! - Bump yummies to 7.23.1 for properly typed MobX annotation helpers.
+
 ## 1.16.0
 
 ### Minor Changes
