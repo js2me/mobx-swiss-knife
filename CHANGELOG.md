@@ -1,5 +1,11 @@
 # mobx-swiss-knife
 
+## 1.16.2
+
+### Patch Changes
+
+- [#30](https://github.com/js2me/mobx-swiss-knife/pull/30) [`06ffc57`](https://github.com/js2me/mobx-swiss-knife/commit/06ffc577a2c73807a895732e82d17407905db0ab) Thanks [@js2me](https://github.com/js2me)! - Bump yummies to 7.23.2 to fix MobX 6 bundler compatibility.
+
 ## 1.16.1
 
 ### Patch Changes
